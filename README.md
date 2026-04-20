@@ -3,6 +3,7 @@
 [![Rust](https://img.shields.io/badge/language-Rust-orange?style=flat-square\&logo=rust)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/project-active-success?style=flat-square)](#)
+[![Docs](https://img.shields.io/badge/docs-mdBook-blue?style=flat-square)](https://praptisharma28.github.io/the-rust-book-simplified/)
 
 ---
 
@@ -20,6 +21,23 @@ If you’re extremely new to Rust(this repository will be enough though), I reco
 
 If you want to test your Rust knowledge with regular quizzes and MCQs, follow along here:
 **[praptichilling](https://x.com/praptichilling)**
+
+## 📖 Read the Book Online
+
+👉 [https://praptisharma28.github.io/the-rust-book-simplified/](https://praptisharma28.github.io/the-rust-book-simplified/)
+
+---
+
+## 🛠 Building Locally
+
+Built with [mdBook](https://rust-lang.github.io/mdBook/) +
+[mdbook-admonish](https://github.com/tommilligan/mdbook-admonish) +
+the [Rust Playground](https://play.rust-lang.org) for runnable code blocks.
+
+```bash
+cargo install mdbook mdbook-admonish
+mdbook serve --open
+```
 
 ---
 

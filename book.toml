@@ -1,0 +1,31 @@
+[book]
+title = "The Rust Book — Simplified"
+authors = ["praptisharma28"]
+description = "Simplified explanations from The Rust Programming Language book, word-to-word, code-to-code, everything important in less time."
+language = "en"
+src = "src"
+
+[output.html]
+git-repository-url = "https://github.com/praptisharma28/the-rust-book-simplified"
+edit-url-template = "https://github.com/praptisharma28/the-rust-book-simplified/edit/main/src/{path}"
+site-url = "/the-rust-book-simplified/"
+cname = ""
+default-theme = "light"
+preferred-dark-theme = "ayu"
+additional-css = ["theme/custom.css", "theme/mdbook-admonish.css"]
+additional-js = ["theme/book.js"]
+
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.playground]
+editable = true
+copyable = true
+copy-js = true
+line-numbers = false
+runnable = true
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.1.0" # do not edit: managed by `mdbook-admonish install`

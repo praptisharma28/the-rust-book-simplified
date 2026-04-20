@@ -1,0 +1,40 @@
+name: Deploy mdBook to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install mdBook
+        run: |
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.51/mdbook-v0.4.51-x86_64-unknown-linux-gnu.tar.gz \
+            | tar -xz --directory /usr/local/bin
+
+      - name: Install mdbook-admonish
+        run: |
+          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/v1.20.0/mdbook-admonish-v1.20.0-x86_64-unknown-linux-gnu.tar.gz \
+            | tar -xz --directory /usr/local/bin mdbook-admonish
+          chmod +x /usr/local/bin/mdbook-admonish
+
+      - name: Build the book
+        run: mdbook build
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
