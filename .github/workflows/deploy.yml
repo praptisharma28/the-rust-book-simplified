@@ -1,64 +1,70 @@
-name: Deploy mdBook to GitHub Pages
+name: Book (build & deploy)
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+# Serialize Pages deploys per-ref; cancel superseded PR builds but never
+# cancel a deploy mid-flight (avoid torn Pages state).
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Version pins live here so updates are a one-line diff.
+env:
+  MDBOOK_VERSION: "0.4.51"
+  MDBOOK_ADMONISH_VERSION: "1.20.0"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build book
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
     permissions:
       contents: read
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install mdBook
-        run: |
-          curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.51/mdbook-v0.4.51-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz --directory /usr/local/bin
+      - name: Install mdBook toolchain
+        uses: taiki-e/install-action@v2
+        with:
+          tool: mdbook@${{ env.MDBOOK_VERSION }},mdbook-admonish@${{ env.MDBOOK_ADMONISH_VERSION }}
 
-      - name: Install mdbook-admonish
-        run: |
-          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/v1.20.0/mdbook-admonish-v1.20.0-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz --directory /usr/local/bin mdbook-admonish
-          chmod +x /usr/local/bin/mdbook-admonish
+      - name: Compile doctests in Rust code samples
+        run: mdbook test
 
-      - name: Build the book
+      - name: Build book
         run: mdbook build
 
-      - name: Upload build artifact
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v4
+      # Only main pushes and manual dispatches actually ship to Pages.
+      - name: Package for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
         with:
-          name: book
           path: ./book
-          retention-days: 1
 
   deploy:
+    name: Deploy to GitHub Pages
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+
+    # Repo setting required: Settings -> Pages -> Source = GitHub Actions.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     permissions:
-      contents: write
+      pages: write      # publish to Pages
+      id-token: write   # OIDC for actions/deploy-pages
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: book
-          path: ./book
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./book
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5
