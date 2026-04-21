@@ -54,7 +54,7 @@ jobs:
 
     # Repo setting required: Settings -> Pages -> Source = GitHub Actions.
     environment:
-      name: github-pages
+      name: ${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main' && 'github-pages-manual' || 'github-pages' }}
       url: ${{ steps.deployment.outputs.page_url }}
 
     permissions:
