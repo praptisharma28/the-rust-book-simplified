@@ -28,8 +28,8 @@
   </div>
   <div class="rs-feature">
     <span class="rs-feature__icon">🧭</span>
-    <div class="rs-feature__title">Maps 1:1 to the official book</div>
-    <p class="rs-feature__desc">Each day corresponds to a chapter — follow along or use as a quick refresher.</p>
+    <div class="rs-feature__title">Maps to the official book</div>
+    <p class="rs-feature__desc">Each day corresponds to a chapter (Ownership is split across Days 4–5).</p>
   </div>
   <div class="rs-feature">
     <span class="rs-feature__icon">🌓</span>
@@ -69,76 +69,76 @@
     <p class="rs-chapter-card__desc">Variables, types, functions, comments, control flow.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-04-ownership.html">
+  <a class="rs-chapter-card" href="day-04-ownership-part-1.html">
     <div class="rs-chapter-card__head">
       <span class="rs-chapter-card__day">Day 04</span>
-      <span class="rs-chapter-card__ch">Ch. 4</span>
+      <span class="rs-chapter-card__ch">Ch. 4 · Pt 1</span>
     </div>
     <div class="rs-chapter-card__title">Understanding Ownership</div>
     <p class="rs-chapter-card__desc">The idea that makes Rust different: move, borrow, slice.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-05-structs.html">
+  <a class="rs-chapter-card" href="day-05-ownership-part-2.html">
     <div class="rs-chapter-card__head">
       <span class="rs-chapter-card__day">Day 05</span>
+      <span class="rs-chapter-card__ch">Ch. 4 · Pt 2</span>
+    </div>
+    <div class="rs-chapter-card__title">Ownership continued</div>
+    <p class="rs-chapter-card__desc">References, mutable borrows, the slice type.</p>
+  </a>
+
+  <a class="rs-chapter-card" href="day-06-structs.html">
+    <div class="rs-chapter-card__head">
+      <span class="rs-chapter-card__day">Day 06</span>
       <span class="rs-chapter-card__ch">Ch. 5</span>
     </div>
     <div class="rs-chapter-card__title">Using Structs</div>
     <p class="rs-chapter-card__desc">Group related data, add methods, think in types.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-06-enums-and-match.html">
+  <a class="rs-chapter-card" href="day-07-enums-and-match.html">
     <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 06</span>
+      <span class="rs-chapter-card__day">Day 07</span>
       <span class="rs-chapter-card__ch">Ch. 6</span>
     </div>
     <div class="rs-chapter-card__title">Enums &amp; Pattern Matching</div>
     <p class="rs-chapter-card__desc">Option, Result, exhaustive match — safer than <code>null</code>.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-07-packages-crates-modules.html">
+  <a class="rs-chapter-card" href="day-08-packages-crates-modules.html">
     <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 07</span>
+      <span class="rs-chapter-card__day">Day 08</span>
       <span class="rs-chapter-card__ch">Ch. 7</span>
     </div>
     <div class="rs-chapter-card__title">Packages, Crates &amp; Modules</div>
     <p class="rs-chapter-card__desc">How a Rust project is organized and published.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-08-collections.html">
+  <a class="rs-chapter-card" href="day-09-collections.html">
     <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 08</span>
+      <span class="rs-chapter-card__day">Day 09</span>
       <span class="rs-chapter-card__ch">Ch. 8</span>
     </div>
     <div class="rs-chapter-card__title">Common Collections</div>
     <p class="rs-chapter-card__desc">Vec, String, and HashMap — the workhorses.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-09-error-handling.html">
+  <a class="rs-chapter-card" href="day-10-error-handling.html">
     <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 09</span>
+      <span class="rs-chapter-card__day">Day 10</span>
       <span class="rs-chapter-card__ch">Ch. 9</span>
     </div>
     <div class="rs-chapter-card__title">Error Handling</div>
     <p class="rs-chapter-card__desc">panic!, Result, the <code>?</code> operator, recovery patterns.</p>
   </a>
 
-  <a class="rs-chapter-card" href="day-10-generics-traits-lifetimes.html">
+  <a class="rs-chapter-card" href="day-11-generics-traits-lifetimes.html">
     <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 10</span>
+      <span class="rs-chapter-card__day">Day 11</span>
       <span class="rs-chapter-card__ch">Ch. 10</span>
     </div>
     <div class="rs-chapter-card__title">Generics, Traits &amp; Lifetimes</div>
     <p class="rs-chapter-card__desc">Abstract over types, share behavior, keep references safe.</p>
-  </a>
-
-  <a class="rs-chapter-card" href="day-11-writing-tests.html">
-    <div class="rs-chapter-card__head">
-      <span class="rs-chapter-card__day">Day 11</span>
-      <span class="rs-chapter-card__ch">Ch. 11</span>
-    </div>
-    <div class="rs-chapter-card__title">Writing Automated Tests</div>
-    <p class="rs-chapter-card__desc">Unit, integration, and the built-in test runner.</p>
   </a>
 
 </div>
@@ -174,8 +174,11 @@ a Run button can be executed right in the browser via the
 [Rust Playground](https://play.rust-lang.org), so you can tweak examples without
 leaving the page.
 
-If you're coming from another language, spend extra time on **Day 4 (Ownership)**
-— it's the idea that makes everything else click.
+If you're coming from another language, spend extra time on **Days 4–5
+(Ownership)** — it's the idea that makes everything else click. Chapter 11
+(Writing Automated Tests) is not covered in this series; refer to the
+[official Rust Book](https://doc.rust-lang.org/book/ch11-00-testing.html) for
+that chapter.
 
 ## Contributing
 
