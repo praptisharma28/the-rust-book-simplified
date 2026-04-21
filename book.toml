@@ -8,8 +8,8 @@ src = "src"
 [output.html]
 git-repository-url = "https://github.com/praptisharma28/the-rust-book-simplified"
 edit-url-template = "https://github.com/praptisharma28/the-rust-book-simplified/edit/main/src/{path}"
-site-url = "/the-rust-book-simplified/"
-cname = ""
+site-url = "/"
+cname = "rust-book.prapti.me"
 default-theme = "navy"
 preferred-dark-theme = "ayu"
 additional-css = ["theme/custom.css", "theme/mdbook-admonish.css"]
