@@ -42,10 +42,12 @@
             if (!a) return;
             var href = a.getAttribute("href");
             if (!href || href === "#") return;
-            var target = document.querySelector(href);
+            var id = href.slice(1);
+            var target = document.getElementById(id);
             if (!target) return;
             e.preventDefault();
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
             history.replaceState(null, "", href);
         });
     }
