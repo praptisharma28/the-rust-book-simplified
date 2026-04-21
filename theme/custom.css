@@ -42,6 +42,10 @@
 .rs-hero h1 {
     margin: 0 0 0.6rem;
 }
+.rs-hero__accent {
+    color: var(--sidebar-active);
+    font-style: italic;
+}
 .rs-hero p {
     margin: 0 0 1rem;
     max-width: 62ch;

@@ -38,7 +38,10 @@
 
     function installSmoothAnchors() {
         document.addEventListener("click", function (e) {
-            var a = e.target.closest && e.target.closest("a[href^='#']");
+            // e.target can be a Text node; normalize to the nearest Element so
+            // .closest() is available across browsers.
+            var el = e.target instanceof Element ? e.target : (e.target && e.target.parentElement);
+            var a = el && el.closest && el.closest("a[href^='#']");
             if (!a) return;
             var href = a.getAttribute("href");
             if (!href || href === "#") return;

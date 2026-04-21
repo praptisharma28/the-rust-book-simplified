@@ -34,8 +34,14 @@ Built with [mdBook](https://rust-lang.github.io/mdBook/) +
 [mdbook-admonish](https://github.com/tommilligan/mdbook-admonish) +
 the [Rust Playground](https://play.rust-lang.org) for runnable code blocks.
 
+Pin the same versions CI uses — `mdbook-admonish 1.20.0` is not yet
+compatible with `mdbook 0.5.x` ([upstream tracking
+issue](https://github.com/tommilligan/mdbook-admonish/issues/233)),
+so `mdbook` stays on `0.4.51` until an admonish release ships.
+
 ```bash
-cargo install mdbook mdbook-admonish
+cargo install mdbook --version 0.4.51
+cargo install mdbook-admonish --version 1.20.0
 mdbook serve --open
 ```
 
