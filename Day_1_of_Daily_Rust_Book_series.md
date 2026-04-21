@@ -19,7 +19,7 @@
 
 # **Foreword**
 
-Rust is about **empowerment** — helping any programmer write reliable and efficient code confidently.
+Rust is about **empowerment** - helping any programmer write reliable and efficient code confidently.
 
 ### Traditional Systems Programming (like C/C++)
 
@@ -35,14 +35,14 @@ Rust eliminates most of these traditional pitfalls by:
 * Preventing *memory* and *concurrency* errors at compile time (the compiler checks for mistakes before the program runs).
 * Giving you **low-level control** over performance (you can manage resources like memory and CPU directly), but without the danger.
 
-You can now “dip down” into low-level control safely — with no crashes, no security holes, and no headaches.
+You can now “dip down” into low-level control safely - with no crashes, no security holes, and no headaches.
 
 ### For Experienced Low-Level Developers
 
 Rust allows you to go even further:
 
-* Introduce **parallelism** safely — the compiler guarantees thread safety (threads are parts of a program that can run simultaneously, and Rust ensures they don’t interfere with each other).
-* Optimize aggressively — without fear of introducing new bugs.
+* Introduce **parallelism** safely - the compiler guarantees thread safety (threads are parts of a program that can run simultaneously, and Rust ensures they don’t interfere with each other).
+* Optimize aggressively - without fear of introducing new bugs.
 
 ### Not Just Low-Level
 
@@ -99,7 +99,7 @@ Rust invites contributions to the language, compiler, libraries, and tooling.
 #### People Who Value Speed and Stability
 
 Rust provides **fast code** and **safe abstractions** (high-level constructs that are safe to use but don’t slow down the program).
-It avoids “brittle legacy” issues and delivers **zero-cost abstractions** — high-level code that performs as fast as low-level implementations.
+It avoids “brittle legacy” issues and delivers **zero-cost abstractions** - high-level code that performs as fast as low-level implementations.
 
 ### Rust’s Goal
 
@@ -114,7 +114,7 @@ You can have both.
 
 ## **1.1 Installation**
 
-### The Recommended Way — `rustup`
+### The Recommended Way - `rustup`
 
 Rust’s official installer and version manager is called **rustup**. It is used to:
 
@@ -199,7 +199,7 @@ You can use any editor, but modern IDEs provide powerful support.
 
 * Visual Studio Code (with `rust-analyzer`)
 * IntelliJ IDEA (Rust plugin)
-* Vim/Neovim (with `rust-analyzer` LSP — Language Server Protocol, gives real-time feedback)
+* Vim/Neovim (with `rust-analyzer` LSP - Language Server Protocol, gives real-time feedback)
 * Emacs (`rust-mode` or LSP)
 * Sublime Text, Atom, etc.
 
@@ -320,7 +320,7 @@ println!("Hello, world!");
 * Prints text to the console
 * `"Hello, world!"` is a string literal (text enclosed in quotes)
 
-Rust compiles directly to machine code — no interpreter involved.
+Rust compiles directly to machine code - no interpreter involved.
 
 ---
 

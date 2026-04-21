@@ -9,9 +9,9 @@ We will cover:
 Rust provides **powerful abstraction tools** that let you write flexible and reusable code **without sacrificing performance**.
 The three main concepts we’ll study are:
 
-1. **Generics** — placeholders for types.
-2. **Traits** — shared behavior definitions for types.
-3. **Lifetimes** — constraints that ensure references remain valid.
+1. **Generics** - placeholders for types.
+2. **Traits** - shared behavior definitions for types.
+3. **Lifetimes** - constraints that ensure references remain valid.
 
 ---
 
@@ -95,7 +95,7 @@ fn largest<T>(list: &[T]) -> &T {
 }
 ```
 
-Here, `T` is a **generic type parameter** — a placeholder for any type.
+Here, `T` is a **generic type parameter** - a placeholder for any type.
 However, this code will **not compile** yet because the compiler doesn’t know that `T` supports the `>` comparison operator.
 
 To fix this, we add a **trait bound** (we’ll explain traits shortly):
@@ -112,7 +112,7 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
 }
 ```
 
-Now, Rust knows that `T` must be a type that implements the **PartialOrd** trait — meaning it supports comparisons like `>`, `<`, `>=`, etc.
+Now, Rust knows that `T` must be a type that implements the **PartialOrd** trait - meaning it supports comparisons like `>`, `<`, `>=`, etc.
 
 ---
 
@@ -182,7 +182,7 @@ enum Result<T, E> {
 }
 ```
 
-These allow Option and Result to store any type of value — making them **extremely versatile**.
+These allow Option and Result to store any type of value - making them **extremely versatile**.
 
 For instance:
 
@@ -224,7 +224,7 @@ fn main() {
 ```
 
 Notice the syntax:
-`impl<T> Point<T>` — this tells Rust that we’re implementing methods for all `Point<T>` types, regardless of the specific `T`.
+`impl<T> Point<T>` - this tells Rust that we’re implementing methods for all `Point<T>` types, regardless of the specific `T`.
 
 You can also **restrict** implementations to specific types:
 
@@ -275,7 +275,7 @@ Output:
 p3.x = 5, p3.y = c
 ```
 
-Here, we combined two different `Point` instances into one — reusing type parameters flexibly.
+Here, we combined two different `Point` instances into one - reusing type parameters flexibly.
 
 ---
 
@@ -307,15 +307,15 @@ enum Option_f64 {
 ```
 
 So at runtime, your program is as efficient as if you’d written all those versions by hand.
-Generics cost **nothing** at runtime — they’re purely a compile-time abstraction.
+Generics cost **nothing** at runtime - they’re purely a compile-time abstraction.
 
 ---
 
 ### Traits: Defining Shared Behavior
 
-A **trait** defines shared behavior — similar to **interfaces** in other languages.
+A **trait** defines shared behavior - similar to **interfaces** in other languages.
 
-For example, suppose you have two data types — `NewsArticle` and `SocialPost` — and you want both to provide a summary.
+For example, suppose you have two data types - `NewsArticle` and `SocialPost` - and you want both to provide a summary.
 
 You define a trait:
 
@@ -390,14 +390,14 @@ While type generics (like `<T>`) describe *what kind* of data a function can han
 
 Rust uses lifetimes to ensure **memory safety without garbage collection**, by checking that **no reference outlives the data it points to**.
 
-Every reference in Rust has an associated lifetime — the scope during which that reference is valid.
+Every reference in Rust has an associated lifetime - the scope during which that reference is valid.
 In most cases, lifetimes are **inferred automatically** by the compiler, but sometimes we must explicitly annotate them to help the **borrow checker** understand how references relate to each other.
 
 ---
 
 ### **2. Preventing Dangling References with Lifetimes**
 
-The **main goal** of lifetimes is to prevent **dangling references** — situations where a reference points to memory that no longer exists.
+The **main goal** of lifetimes is to prevent **dangling references** - situations where a reference points to memory that no longer exists.
 
 Example (which does *not* compile):
 
@@ -462,7 +462,7 @@ fn main() {
 }
 ```
 
-Now, both the data and reference exist in the same scope — safe and valid.
+Now, both the data and reference exist in the same scope - safe and valid.
 
 ---
 
@@ -533,7 +533,7 @@ Explanation:
 * `'a` is a generic lifetime parameter.
 * Both parameters `x` and `y`, and the return value, share the same lifetime `'a`.
 * It tells Rust:
-  “The returned reference will be valid as long as both `x` and `y` are valid — i.e., the smaller of their lifetimes.”
+  “The returned reference will be valid as long as both `x` and `y` are valid - i.e., the smaller of their lifetimes.”
 
 Now, Rust can verify this and the function compiles safely.
 
@@ -700,7 +700,7 @@ impl<'a> ImportantExcerpt<'a> {
 }
 ```
 
-Here, no explicit lifetime is needed for `self` — elision handles it.
+Here, no explicit lifetime is needed for `self` - elision handles it.
 
 Another example:
 
@@ -746,4 +746,4 @@ However, you should not use `'static` to “force” a reference to compile unle
 * Lifetimes apply to **functions, structs, and methods** to ensure valid borrowing.
 * The **'static lifetime** means data lives for the whole program duration.
 
-Together, **Generics, Traits, and Lifetimes** form the foundation of **safe, reusable, and performant code in Rust** — giving developers the power of abstraction **without sacrificing memory safety or performance.**
+Together, **Generics, Traits, and Lifetimes** form the foundation of **safe, reusable, and performant code in Rust** - giving developers the power of abstraction **without sacrificing memory safety or performance.**

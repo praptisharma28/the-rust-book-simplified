@@ -64,7 +64,7 @@ Output:
 Hello, world!
 ```
 
-Great — now we’ll replace that with real code.
+Great - now we’ll replace that with real code.
 
 ---
 
@@ -120,7 +120,7 @@ Without `mut`, we can’t modify `guess` later.
 * `.read_line(&mut guess)` → reads a line and appends it to `guess`.
 * `&mut guess` → passes a mutable reference, allowing the function to modify it.
 
-This method returns a `Result` type — it can succeed or fail.
+This method returns a `Result` type - it can succeed or fail.
 That’s why we handle it with `.expect()` next.
 
 ---
@@ -160,7 +160,7 @@ You’ve used:
 
 Now we’ll generate a random number between 1 and 100.
 
-Rust’s standard library doesn’t include random number generation — you get that via an **external crate** called `rand`.
+Rust’s standard library doesn’t include random number generation - you get that via an **external crate** called `rand`.
 
 ### Step 3.1: Add `rand` to Your Dependencies
 
@@ -280,7 +280,7 @@ Step by step:
 
 * `guess` was a `String`.
 * `trim()` removes whitespace and newlines.
-* `parse()` converts it into another type — here, a `u32`.
+* `parse()` converts it into another type - here, a `u32`.
 * `expect()` handles errors for invalid input.
 
 ---

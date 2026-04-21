@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-Enums (short for *enumerations*) allow you to define a type by enumerating its possible **variants** — that is, by explicitly listing all the possible forms a value of that type can take.
+Enums (short for *enumerations*) allow you to define a type by enumerating its possible **variants** - that is, by explicitly listing all the possible forms a value of that type can take.
 While structs group together related data, enums are about defining a type that can represent **exactly one of several possibilities**.
 
 In this chapter, we’ll cover:
@@ -14,7 +14,7 @@ In this chapter, we’ll cover:
 ## 2. Defining an Enum
 
 An enum defines a type by enumerating its possible variants.
-Example — representing the kind of IP addresses:
+Example - representing the kind of IP addresses:
 
 ```rust
 enum IpAddrKind {
@@ -117,7 +117,7 @@ enum Message {
 }
 ```
 
-Each variant can store different types of values — unit-like, tuple-like, or struct-like.
+Each variant can store different types of values - unit-like, tuple-like, or struct-like.
 
 You can also define methods on enums:
 
@@ -153,7 +153,7 @@ let some_char = Some('e');
 let absent_number: Option<i32> = None;
 ```
 
-`Option<T>` and `T` are different types — this means Rust won’t let you use an `Option<i8>` like an `i8` without handling the `None` case.
+`Option<T>` and `T` are different types - this means Rust won’t let you use an `Option<i8>` like an `i8` without handling the `None` case.
 
 For instance, this will not compile:
 
@@ -248,7 +248,7 @@ If we pass `Coin::Quarter(UsState::Alaska)`, it will print “State quarter from
 
 `match` works perfectly with `Option<T>` too.
 
-Example — incrementing an optional integer:
+Example - incrementing an optional integer:
 
 ```rust
 fn plus_one(x: Option<i32>) -> Option<i32> {

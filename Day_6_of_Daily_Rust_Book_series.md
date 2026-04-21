@@ -11,7 +11,7 @@ From the book, we will cover:
 
 Structs (short for *structures*) group related data together under one name.
 They’re like named tuples, but each field has a name, making code more readable.
-Structs are similar to objects in OOP — they hold data, and you can define methods for them.
+Structs are similar to objects in OOP - they hold data, and you can define methods for them.
 
 ### Example
 
@@ -321,9 +321,9 @@ rect1.area();
 
 ### Why `&self`?
 
-* `self` — takes ownership
-* `&self` — immutable borrow (read-only)
-* `&mut self` — mutable borrow (allows modification)
+* `self` - takes ownership
+* `&self` - immutable borrow (read-only)
+* `&mut self` - mutable borrow (allows modification)
 
 `&self` is most common since most methods read data without modifying it.
 
@@ -456,7 +456,7 @@ They are declared with the `fn` keyword just like normal functions, but with two
 1. They are defined **inside an `impl` block** (short for *implementation*).
 2. Their **first parameter is always `self`**, which represents the instance of the type on which the method is called.
 
-This `self` lets methods operate on data *inside* the struct — similar to how methods work in object-oriented languages, but with Rust’s safety and ownership guarantees.
+This `self` lets methods operate on data *inside* the struct - similar to how methods work in object-oriented languages, but with Rust’s safety and ownership guarantees.
 
 ---
 
@@ -517,7 +517,7 @@ The area of the rectangle is 1500 square pixels.
   * We don’t take ownership.
   * We can *read* its fields but not modify them.
 
-Inside the method body, we use `self.width` and `self.height` —
+Inside the method body, we use `self.width` and `self.height` -
 `self` refers to the instance (`rect1` in our example).
 
 When calling, `rect1.area()` is **method syntax**.
@@ -527,7 +527,7 @@ Rust automatically translates this to:
 Rectangle::area(&rect1);
 ```
 
-That’s why you don’t need to manually pass `rect1` — Rust does it.
+That’s why you don’t need to manually pass `rect1` - Rust does it.
 
 ---
 
@@ -555,7 +555,7 @@ Taking ownership (`self`) is rare, used mainly when a method *returns a complete
 
 Using methods instead of plain functions:
 
-* Improves organization — related behaviors live together.
+* Improves organization - related behaviors live together.
 * Provides the clean `.method()` syntax.
 * Avoids repeating the type everywhere.
 * Clearly associates functionality with a type.
@@ -590,14 +590,14 @@ When you call `rect1.width()`, Rust knows it’s the **method**.
 When you use `rect1.width`, Rust knows it’s the **field**.
 
 Methods like this that return a field’s value are called **getters**.
-Unlike languages like Java or Python, Rust doesn’t generate getters automatically — you define them yourself.
+Unlike languages like Java or Python, Rust doesn’t generate getters automatically - you define them yourself.
 You’ll learn more about making fields private and exposing public getters in Chapter 7.
 
 ---
 
 ## Methods with More Parameters
 
-Let’s add another method — one that takes another `Rectangle` as an argument and checks if `self` can contain it.
+Let’s add another method - one that takes another `Rectangle` as an argument and checks if `self` can contain it.
 
 ```rust
 impl Rectangle {
@@ -627,7 +627,7 @@ Can rect1 hold rect2? true
 Can rect1 hold rect3? false
 ```
 
-Here, we pass `&rect2` and `&rect3` — immutable borrows, since we only read their data.
+Here, we pass `&rect2` and `&rect3` - immutable borrows, since we only read their data.
 
 ---
 
@@ -636,7 +636,7 @@ Here, we pass `&rect2` and `&rect3` — immutable borrows, since we only read th
 Not all functions in an `impl` block need to be methods.
 If a function doesn’t take `self` as its first parameter, it’s called an **associated function**.
 
-Example — a constructor-like function:
+Example - a constructor-like function:
 
 ```rust
 impl Rectangle {
@@ -652,7 +652,7 @@ impl Rectangle {
 Here:
 
 * `Self` means the same as `Rectangle`.
-* This function doesn’t take any instance — it creates one.
+* This function doesn’t take any instance - it creates one.
 * We call it using the `::` syntax:
 
   ```rust
@@ -683,7 +683,7 @@ impl Rectangle {
 }
 ```
 
-You may not need to split them, but it’s valid — and sometimes useful when combining traits, generics, or organization.
+You may not need to split them, but it’s valid - and sometimes useful when combining traits, generics, or organization.
 
 ---
 
@@ -785,7 +785,7 @@ let other_rect = Rectangle { width: 1, height: 1 };
 let max_rect = rect.max(other_rect);
 ```
 
-This is valid — because:
+This is valid - because:
 
 * `rect.area()` borrows immutably.
 * `rect.max()` takes ownership (moves `rect`).
@@ -821,7 +821,7 @@ let rect_ref = &rect;
 rect_ref.set_width(20);
 ```
 
-It fails again — because even though the original `rect` is mutable,
+It fails again - because even though the original `rect` is mutable,
 `rect_ref` is an immutable reference.
 You can’t call a `&mut self` method through a shared reference.
 
@@ -850,7 +850,7 @@ That’s because `max` takes ownership of `rect`, so `rect` can’t be used agai
 
 ## Calling `self` Methods on References
 
-Sometimes, you might want to call a `self`-taking method (`fn consumes(self)`) on a reference —
+Sometimes, you might want to call a `self`-taking method (`fn consumes(self)`) on a reference -
 for example, inside another method that takes `&mut self`:
 
 ```rust
@@ -860,7 +860,7 @@ fn set_to_max(&mut self, other: Rectangle) {
 ```
 
 This fails because `self.max()` tries to move out of `*self`,
-but `*self` is borrowed — Rust prevents that move to avoid double-free errors.
+but `*self` is borrowed - Rust prevents that move to avoid double-free errors.
 
 ---
 
@@ -916,7 +916,7 @@ fn set_to_max(&mut self, other: Rectangle) {
 ```
 
 Here, both `self.name` and `other.name` would be freed,
-and then again when `*self = max` overwrites it — causing **undefined behavior**.
+and then again when `*self = max` overwrites it - causing **undefined behavior**.
 So Rust forbids this move entirely.
 
 ---
@@ -928,9 +928,9 @@ So Rust forbids this move entirely.
 * **Associated functions** (without `self`) are functions tied to the type itself, often used as constructors.
 * **Ownership and borrowing rules** apply the same way for methods:
 
-  * `&self` — shared access.
-  * `&mut self` — exclusive mutable access.
-  * `self` — ownership transfer.
+  * `&self` - shared access.
+  * `&mut self` - exclusive mutable access.
+  * `self` - ownership transfer.
 * Rust’s method syntax (`rect.area()`) is syntactic sugar for plain function calls (`Rectangle::area(&rect)`).
 * Rust’s design ensures memory safety even in tricky cases like moving or copying from `self`.
 

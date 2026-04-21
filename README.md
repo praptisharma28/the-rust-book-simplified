@@ -12,8 +12,8 @@ The goal here is simple, make Rust easier to understand without losing any of it
 
 If you’re extremely new to Rust(this repository will be enough though), I recommend watching any of these two YouTube playlists:
 
-* [Let’s Get Rusty — Complete Rust Course](https://www.youtube.com/playlist?list=PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8)
-* [Brooks Builds — Rust for Beginners](https://www.youtube.com/playlist?list=PLAJ-sYO1aGdxQ_skPPtJ7PlSAjTXM-atv)
+* [Let’s Get Rusty - Complete Rust Course](https://www.youtube.com/playlist?list=PLai5B987bZ9CoVR-QEIN9foz4QCJ0H2Y8)
+* [Brooks Builds - Rust for Beginners](https://www.youtube.com/playlist?list=PLAJ-sYO1aGdxQ_skPPtJ7PlSAjTXM-atv)
 
 ---
 
@@ -34,7 +34,7 @@ Built with [mdBook](https://rust-lang.github.io/mdBook/) +
 [mdbook-admonish](https://github.com/tommilligan/mdbook-admonish) +
 the [Rust Playground](https://play.rust-lang.org) for runnable code blocks.
 
-Pin the same versions CI uses — `mdbook-admonish 1.20.0` is not yet
+Pin the same versions CI uses - `mdbook-admonish 1.20.0` is not yet
 compatible with `mdbook 0.5.x` ([upstream tracking
 issue](https://github.com/tommilligan/mdbook-admonish/issues/233)),
 so `mdbook` stays on `0.4.51` until an admonish release ships.

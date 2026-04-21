@@ -5,7 +5,7 @@ Today, we will complete:
 <img width="222" height="92" alt="Screenshot 2025-10-19 at 9 23 10 PM" src="https://github.com/user-attachments/assets/cf3dfbb1-6df9-4f76-b120-ffb12f9b7d85" />
 
 
-Now you’ll understand *how to share data without transferring ownership* — safely.
+Now you’ll understand *how to share data without transferring ownership* - safely.
 
 ---
 
@@ -31,10 +31,10 @@ fn calculate_length(s: &String) -> usize {
 
 ### Explanation:
 
-* `&s1` — this **creates a reference** to `s1`, not a copy.
+* `&s1` - this **creates a reference** to `s1`, not a copy.
 * The function `calculate_length` takes `s: &String`, meaning “I’ll look at a string, but I won’t own it.”
 * Ownership of `s1` is **not transferred**, only borrowed temporarily.
-* After the function call, `s1` is still valid — you can still use it.
+* After the function call, `s1` is still valid - you can still use it.
 
 Output:
 
@@ -64,7 +64,7 @@ Compilation error:
 cannot borrow `*some_string` as mutable, as it is behind a `&` reference
 ```
 
-This happens because `&String` is an **immutable reference** — you’re not allowed to change the data.
+This happens because `&String` is an **immutable reference** - you’re not allowed to change the data.
 
 ---
 
@@ -95,7 +95,7 @@ hello, world
 1. You can have **only one mutable reference** to a value at a time.
 2. You **cannot** have a mutable reference while an immutable one exists.
 
-This avoids **data races** — situations where multiple pointers try to read and write simultaneously.
+This avoids **data races** - situations where multiple pointers try to read and write simultaneously.
 
 ---
 
@@ -132,7 +132,7 @@ let r2 = &mut s;
 println!("{}", r2);
 ```
 
-Works — because `r1` is dropped before `r2` begins.
+Works - because `r1` is dropped before `r2` begins.
 
 ---
 
@@ -167,13 +167,13 @@ let r3 = &mut s; // r1 and r2 no longer used
 println!("{}", r3);
 ```
 
-Works — after immutable refs are no longer used, the mutable one is allowed.
+Works - after immutable refs are no longer used, the mutable one is allowed.
 
 ---
 
 ## Dangling References
 
-A **dangling reference** points to data that has been freed — Rust **completely forbids** this.
+A **dangling reference** points to data that has been freed - Rust **completely forbids** this.
 
 Example:
 
@@ -226,7 +226,7 @@ You want a function that returns the first word of a string:
 fn first_word(s: &String) -> ?
 ```
 
-You could find the index of the space, but returning that index isn’t ideal — what if the string changes?
+You could find the index of the space, but returning that index isn’t ideal - what if the string changes?
 
 Example:
 
@@ -304,12 +304,12 @@ let word = first_word(&s);
 s.clear(); // ERROR!
 ```
 
-Compile-time error — can’t mutate while a slice exists.
+Compile-time error - can’t mutate while a slice exists.
 Rust automatically prevents invalid references!
 
 ---
 
-## Other Slices — Arrays
+## Other Slices - Arrays
 
 Slices aren’t just for strings:
 
@@ -332,7 +332,7 @@ It borrows a section of the array safely.
 | **Reference (`&T`)**             | Borrow data immutably                             |
 | **Mutable Reference (`&mut T`)** | Borrow data mutably                               |
 | **Borrowing Rules**              | Either multiple immutable refs OR one mutable ref |
-| **Dangling Ref**                 | Forbidden — data must live long enough            |
+| **Dangling Ref**                 | Forbidden - data must live long enough            |
 | **Slice (`&[T]` or `&str`)**     | Borrow part of data without ownership             |
 | **Compiler Enforcement**         | Borrow checker ensures safety at compile time     |
 
@@ -387,7 +387,7 @@ Here’s what happens:
 
 #### Advantages of GC
 
-* Easy for developers — no need to manually manage memory.
+* Easy for developers - no need to manually manage memory.
 * Avoids “use-after-free” bugs (accessing freed memory).
 * Prevents some types of memory leaks automatically.
 
@@ -460,7 +460,7 @@ Now both show:
 ["Hello", "world"]
 ```
 
-This is a **shared mutable reference** — it can easily cause unexpected bugs.
+This is a **shared mutable reference** - it can easily cause unexpected bugs.
 You didn’t intend to mutate `d`, but you did!
 
 ---
@@ -513,7 +513,7 @@ fn new_document(words: Vec<String>) -> Document {
 * This function **takes ownership** of the `Vec<String>` (`words`).
 * When we call `new_document`, the ownership of the vector moves into the function.
 * When the `Document` goes out of scope, Rust automatically **drops (frees)** the memory.
-* This is **predictable cleanup** — at the exact end of the owner’s lifetime.
+* This is **predictable cleanup** - at the exact end of the owner’s lifetime.
 
 ---
 
@@ -527,7 +527,7 @@ fn add_word(this: &mut Document, word: String) {
 
 * We pass a **mutable reference** `&mut Document`, so we can modify it safely.
 * The function **takes ownership** of the `word`, ensuring no other variable can use it after.
-* No other code can mutate `this` at the same time — Rust enforces this at compile time.
+* No other code can mutate `this` at the same time - Rust enforces this at compile time.
 
 ---
 
@@ -571,7 +571,7 @@ fn main() {
 
 * `words` is moved into `d` → `d` now owns the memory.
 * `get_words(&d)` returns a reference (a “view”) of the data, not ownership.
-* `.to_vec()` clones each `String` — now `d2` has its *own copy*.
+* `.to_vec()` clones each `String` - now `d2` has its *own copy*.
 * Modifying `d2` does not affect `d`.
 
 No accidental sharing.
@@ -580,7 +580,7 @@ Predictable cleanup and performance.
 
 ---
 
-## Summary — Garbage Collection vs Ownership
+## Summary - Garbage Collection vs Ownership
 
 | Aspect             | Garbage Collection (Python/Java)    | Ownership (Rust)                                |
 | ------------------ | ----------------------------------- | ----------------------------------------------- |
@@ -623,9 +623,9 @@ These rules guarantee **memory safety** without runtime overhead.
 
 ## Final Takeaway
 
-Rust doesn’t remove memory management — it just **moves it from runtime to compile-time**.
+Rust doesn’t remove memory management - it just **moves it from runtime to compile-time**.
 
-If you’ve used other programming languages, you’ve already dealt with memory and pointers — just indirectly. Rust makes them **visible and safe**, so you can:
+If you’ve used other programming languages, you’ve already dealt with memory and pointers - just indirectly. Rust makes them **visible and safe**, so you can:
 
 * Predict exactly when cleanup happens,
 * Avoid garbage collection overhead,
@@ -637,5 +637,5 @@ Finally, we are done with ownership. Will move to stucts in day 6.
 
 ### Summary Quote
 
-> “If Rust is not your first language, then you’ve already worked with memory and pointers —
+> “If Rust is not your first language, then you’ve already worked with memory and pointers -
 > Rust just makes those ideas explicit, predictable, and safe.”

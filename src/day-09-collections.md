@@ -5,7 +5,7 @@ In this chapter, we will cover:
 <img width="267" height="147" alt="Screenshot 2025-10-27 at 4 05 58 PM" src="https://github.com/user-attachments/assets/ce33c6f2-5d4d-4e6d-871a-eafc8c9f6589" />
 
 
-Rust’s standard library provides several **collection types** — data structures that store multiple values in a single data type. The most commonly used collections are:
+Rust’s standard library provides several **collection types** - data structures that store multiple values in a single data type. The most commonly used collections are:
 
 * **Vectors (`Vec<T>`)** – for storing a list of items of the same type in a growable, contiguous array.
 * **Strings (`String`)** – for text that is stored as a collection of UTF-8–encoded bytes.
@@ -17,7 +17,7 @@ These are the *core* collections you’ll use in almost every Rust program.
 
 ### 8.1. Storing Lists of Values with Vectors
 
-A **vector** (`Vec<T>`) is a growable array type — all elements must be of the same type, and it stores them next to each other in memory.
+A **vector** (`Vec<T>`) is a growable array type - all elements must be of the same type, and it stores them next to each other in memory.
 
 #### Creating a Vector
 
@@ -62,7 +62,7 @@ When a vector goes out of scope, all its elements are also **dropped** automatic
 } // v is dropped here, memory freed
 ```
 
-Rust ensures memory safety — no use-after-free or leaks occur.
+Rust ensures memory safety - no use-after-free or leaks occur.
 
 ---
 
@@ -103,7 +103,7 @@ This code **won’t compile** because:
 * You borrowed `v` immutably (`&v[0]`).
 * Then tried to mutate it (`v.push(6)`).
 
-When you push to a vector, Rust may reallocate memory — invalidating existing references.
+When you push to a vector, Rust may reallocate memory - invalidating existing references.
 Rust’s **borrow checker** prevents this to ensure safety.
 
 ---
@@ -331,7 +331,7 @@ let mut map = HashMap::new();
 map.insert(field_name, field_value);
 ```
 
-After this, both `field_name` and `field_value` are invalid — ownership moved.
+After this, both `field_name` and `field_value` are invalid - ownership moved.
 
 ---
 
@@ -379,7 +379,7 @@ This is a **word counter** using HashMap.
 ## Chapter Summary
 
 * **Vectors**: Store lists of elements of the same type.
-* **Strings**: Collections of UTF-8 bytes — safe, explicit, and owned.
+* **Strings**: Collections of UTF-8 bytes - safe, explicit, and owned.
 * **HashMaps**: Store key-value pairs with full control over ownership and updates.
 
 Each of these collections interacts with **ownership** and **borrowing** rules differently, but consistently. Rust’s rules guarantee that you can never have dangling references or memory leaks.

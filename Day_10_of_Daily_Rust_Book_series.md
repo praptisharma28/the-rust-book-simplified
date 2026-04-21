@@ -1,4 +1,4 @@
-## Day 10: Chapter 9 — Error Handling
+## Day 10: Chapter 9 - Error Handling
 
 Errors are inevitable in software, and Rust ensures you handle them *before* your program compiles. This makes your code more robust and less prone to runtime crashes. We will cover:
 

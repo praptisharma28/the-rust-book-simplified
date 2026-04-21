@@ -100,7 +100,7 @@ The value of x is: 6
 ```
 
 **Tip:** Use `mut` sparingly.
-Prefer immutability unless you explicitly need to mutate — it improves safety and readability.
+Prefer immutability unless you explicitly need to mutate - it improves safety and readability.
 
 ---
 
@@ -139,13 +139,13 @@ Example:
 const MAX_POINTS: u32 = 100_000;
 ```
 
-If you ever want to change it later — you change it once.
+If you ever want to change it later - you change it once.
 
 ---
 
 ## Shadowing
 
-Rust allows **redefining a variable with the same name** — this is called **shadowing**.
+Rust allows **redefining a variable with the same name** - this is called **shadowing**.
 
 This is not mutation.
 It’s creating a **new variable** that overrides the previous one **in scope**.
@@ -212,7 +212,7 @@ spaces = spaces.len(); // Error: mismatched types
 
 ## Data Types
 
-Rust is **statically typed** — the compiler must know the **type of every variable** at compile time.
+Rust is **statically typed** - the compiler must know the **type of every variable** at compile time.
 
 Most of the time, it can **infer** the type, but sometimes you need **type annotations**.
 
@@ -451,7 +451,7 @@ If user enters invalid index:
 index out of bounds: the len is 5 but the index is 10
 ```
 
-Rust **stops execution** immediately instead of letting you access invalid memory — this is **memory safety** in action.
+Rust **stops execution** immediately instead of letting you access invalid memory - this is **memory safety** in action.
 
 ---
 
@@ -475,7 +475,7 @@ fn another_function() {
 * `fn` → keyword used to define a function.
 * `main()` → the entry point of the program (like `int main()` in C).
 * `{}` → denotes the function body.
-* You can **define functions anywhere** in your file — before or after `main()` — as long as they are visible in scope.
+* You can **define functions anywhere** in your file - before or after `main()` - as long as they are visible in scope.
 
 Rust doesn’t care about order of function definitions because it **resolves everything at compile time**, not runtime.
 
@@ -483,7 +483,7 @@ Rust doesn’t care about order of function definitions because it **resolves ev
 
 ## Function Parameters
 
-Functions can take *parameters* — variables passed into the function.
+Functions can take *parameters* - variables passed into the function.
 
 ### Example
 
@@ -498,7 +498,7 @@ fn another_function(x: i32) {
 ```
 
 * `x: i32` → defines a parameter `x` of type 32-bit integer.
-* Rust **requires** explicit type annotations for parameters — unlike Python or JavaScript.
+* Rust **requires** explicit type annotations for parameters - unlike Python or JavaScript.
   This makes type inference simpler elsewhere in the program.
 
 ### Parameter vs Argument
@@ -557,7 +557,7 @@ You **can’t** do:
 let x = (let y = 6);
 ```
 
-because `let y = 6` doesn’t return a value — it’s just an action.
+because `let y = 6` doesn’t return a value - it’s just an action.
 
 ---
 
@@ -590,7 +590,7 @@ x + 1;  // now it returns nothing!
 
 ## Functions with Return Values
 
-Rust functions can return values — these are **implicit** unless you use the `return` keyword.
+Rust functions can return values - these are **implicit** unless you use the `return` keyword.
 
 ### Example
 
@@ -658,7 +658,7 @@ These are ignored by the compiler, purely for readability.
 
 ---
 
-## Control Flow — `if`, `else if`, `else`
+## Control Flow - `if`, `else if`, `else`
 
 ### Basic `if` Example
 

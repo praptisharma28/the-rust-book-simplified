@@ -1,5 +1,5 @@
 /* ==========================================================================
-   The Rust Book — Simplified :: landing-page styles only.
+   The Rust Book - Simplified :: landing-page styles only.
    Everything outside of the landing (sidebar, typography, code blocks,
    tables, links) is intentionally left to mdBook defaults for a uniform,
    familiar reading experience.
@@ -11,7 +11,7 @@
     --rs-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* --- Reading progress bar (added by theme/book.js) ----------------------- */
+/* --- Reading progress bar (added by theme/site.js) ----------------------- */
 #rs-progress {
     position: fixed;
     top: 0;
@@ -56,6 +56,37 @@
     gap: 10px;
     margin-top: 0.8rem;
 }
+.rs-theme-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+}
+.rs-theme-switcher__label,
+.rs-theme-switcher__hint {
+    font-size: 0.92em;
+    color: color-mix(in srgb, var(--fg) 78%, transparent);
+}
+.rs-theme-btn {
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--table-border-color);
+    background: transparent;
+    color: var(--fg);
+    font: inherit;
+    cursor: pointer;
+    transition: background 120ms var(--rs-ease), border-color 120ms var(--rs-ease), color 120ms var(--rs-ease);
+}
+.rs-theme-btn[aria-pressed="true"] {
+    border-color: var(--sidebar-active);
+    background: color-mix(in srgb, var(--sidebar-active) 12%, transparent);
+}
+.rs-theme-btn:focus-visible {
+    outline: 2px solid var(--sidebar-active);
+    outline-offset: 2px;
+}
 .rs-btn {
     display: inline-block;
     padding: 8px 16px;
@@ -79,6 +110,12 @@
 }
 .rs-btn--ghost:hover {
     background: color-mix(in srgb, var(--fg) 6%, transparent);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .rs-theme-btn:hover {
+        border-color: var(--sidebar-active);
+        background: color-mix(in srgb, var(--sidebar-active) 6%, transparent);
+    }
 }
 
 /* --- Landing: progress bar ---------------------------------------------- */
@@ -190,6 +227,7 @@
 /* --- Responsive --------------------------------------------------------- */
 @media (max-width: 720px) {
     .rs-chapter-grid { grid-template-columns: 1fr; }
+    .rs-theme-switcher { align-items: flex-start; }
 }
 
 /* --- Reduced motion ----------------------------------------------------- */

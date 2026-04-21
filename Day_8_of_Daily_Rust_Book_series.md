@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-Today, we’re going to cover one of the most important parts of learning Rust — how to organize your code as your project grows.
+Today, we’re going to cover one of the most important parts of learning Rust - how to organize your code as your project grows.
 
 
 <img width="258" height="253" alt="Screenshot 2025-10-27 at 4 06 53 PM" src="https://github.com/user-attachments/assets/7f8d29e3-1bf3-4071-9c76-47af59847c22" />
@@ -15,7 +15,7 @@ Packages are the containers that hold your Rust projects.
 
 A package can contain:
 - One or more crates (projects or libraries).
-- A Cargo.toml file (this is like the project’s recipe — it lists dependencies and metadata).
+- A Cargo.toml file (this is like the project’s recipe - it lists dependencies and metadata).
 
 There are two main types of crates:
 - **Binary crate** → makes an executable program (like cargo run).
@@ -26,7 +26,7 @@ There are two main types of crates:
 When your Rust project grows, you’ll start having many functions, structs, and enums.
 To keep everything neat and avoid name clashes, Rust lets you group related code into modules using the ```mod``` keyword.
 
-Think of a module as a folder or section of your project — a place to group code that belongs together.
+Think of a module as a folder or section of your project - a place to group code that belongs together.
 
 ### Example: A Restaurant Analogy
 
@@ -56,7 +56,7 @@ mod front_of_house {
 
 ### Breaking This Down
 
-```mod front_of_house``` — defines a module named ```front_of_house```.
+```mod front_of_house``` - defines a module named ```front_of_house```.
 
 Inside it, we have two submodules:
 
@@ -64,13 +64,13 @@ Inside it, we have two submodules:
 
 - ```mod serving```
 
-The pub keyword means public — it tells Rust that other parts of the program can use this module or function.If we don’t mark something as pub, Rust keeps it private by default, meaning it can only be used inside the same module.
+The pub keyword means public - it tells Rust that other parts of the program can use this module or function.If we don’t mark something as pub, Rust keeps it private by default, meaning it can only be used inside the same module.
 
 So in our example:
 ```
-add_to_waitlist() ✅ is public — other modules can call it.
+add_to_waitlist() ✅ is public - other modules can call it.
 
-seat_at_table() ❌ is private — only hosting can use it.
+seat_at_table() ❌ is private - only hosting can use it.
 ```
 
 ### Using the Module from Another Place
@@ -95,7 +95,7 @@ fn main() {
 
 ## 4. Paths for Referring to an Item in the Module Tree
 
-To use a function or struct inside a module, you need to refer to it by its path — kind of like how you use file paths in a computer.
+To use a function or struct inside a module, you need to refer to it by its path - kind of like how you use file paths in a computer.
 
 There are two types of paths:
 
@@ -158,7 +158,7 @@ Rust automatically looks for:
 
 A folder named ```front_of_house``` containing a ```mod.rs``` or nested modules.
 
-This keeps your codebase modular and easy to navigate — just like storing things in labeled boxes instead of one giant drawer.
+This keeps your codebase modular and easy to navigate - just like storing things in labeled boxes instead of one giant drawer.
 
 
 ## 7. Summary

@@ -2,7 +2,7 @@
   <span class="rs-hero__eyebrow">🦀 A 13-day walkthrough</span>
   <h1>The Rust Book, <span class="rs-hero__accent">simplified</span>.</h1>
   <p>
-    A beginner-friendly retelling of the official Rust Book — word-to-word,
+    A beginner-friendly retelling of the official Rust Book - word-to-word,
     code-to-code, everything important in less time. Runnable examples,
     bite-sized chapters, and zero fluff.
   </p>
@@ -18,24 +18,6 @@
     <span><strong>11</strong> of 13 days complete</span>
   </div>
   <div class="rs-progress__bar"><span class="rs-progress__fill"></span></div>
-</div>
-
-<div class="rs-features">
-  <div class="rs-feature">
-    <span class="rs-feature__icon">⚡</span>
-    <div class="rs-feature__title">Runnable code</div>
-    <p class="rs-feature__desc">Every Rust block ships with a Run button powered by the official Rust Playground.</p>
-  </div>
-  <div class="rs-feature">
-    <span class="rs-feature__icon">🧭</span>
-    <div class="rs-feature__title">Maps to the official book</div>
-    <p class="rs-feature__desc">Each day corresponds to a chapter (Ownership is split across Days 4–5).</p>
-  </div>
-  <div class="rs-feature">
-    <span class="rs-feature__icon">🌓</span>
-    <div class="rs-feature__title">Light &amp; dark themes</div>
-    <p class="rs-feature__desc">Rust-accented light, Ayu, Navy, Coal, and the classic earthy Rust theme.</p>
-  </div>
 </div>
 
 <h2 class="rs-section-title">The curriculum</h2>
@@ -57,7 +39,7 @@
       <span class="rs-chapter-card__ch">Ch. 2</span>
     </div>
     <div class="rs-chapter-card__title">Guessing Game</div>
-    <p class="rs-chapter-card__desc">Build a small program end-to-end — I/O, crates, match.</p>
+    <p class="rs-chapter-card__desc">Build a small program end-to-end - I/O, crates, match.</p>
   </a>
 
   <a class="rs-chapter-card" href="day-03-common-concepts.html">
@@ -102,7 +84,7 @@
       <span class="rs-chapter-card__ch">Ch. 6</span>
     </div>
     <div class="rs-chapter-card__title">Enums &amp; Pattern Matching</div>
-    <p class="rs-chapter-card__desc">Option, Result, exhaustive match — safer than <code>null</code>.</p>
+    <p class="rs-chapter-card__desc">Option, Result, exhaustive match - safer than <code>null</code>.</p>
   </a>
 
   <a class="rs-chapter-card" href="day-08-packages-crates-modules.html">
@@ -120,7 +102,7 @@
       <span class="rs-chapter-card__ch">Ch. 8</span>
     </div>
     <div class="rs-chapter-card__title">Common Collections</div>
-    <p class="rs-chapter-card__desc">Vec, String, and HashMap — the workhorses.</p>
+    <p class="rs-chapter-card__desc">Vec, String, and HashMap - the workhorses.</p>
   </a>
 
   <a class="rs-chapter-card" href="day-10-error-handling.html">
@@ -162,20 +144,20 @@
       <span class="rs-chapter-card__ch">Ch. 13</span>
     </div>
     <div class="rs-chapter-card__title">Iterators &amp; Closures</div>
-    <p class="rs-chapter-card__desc">Functional Rust — lazy, expressive, surprisingly fast.</p>
+    <p class="rs-chapter-card__desc">Functional Rust - lazy, expressive, surprisingly fast.</p>
   </div>
 
 </div>
 
 ## How to use this book
 
-Work through the days in order — each builds on the last. Every code block with
+Work through the days in order - each builds on the last. Every code block with
 a Run button can be executed right in the browser via the
 [Rust Playground](https://play.rust-lang.org), so you can tweak examples without
 leaving the page.
 
 If you're coming from another language, spend extra time on **Days 4–5
-(Ownership)** — it's the idea that makes everything else click. Chapter 11
+(Ownership)** - it's the idea that makes everything else click. Chapter 11
 (Writing Automated Tests) is not covered in this series; refer to the
 [official Rust Book](https://doc.rust-lang.org/book/ch11-00-testing.html) for
 that chapter.

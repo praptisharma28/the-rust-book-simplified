@@ -67,7 +67,7 @@ error[E0425]: cannot find value `x` in this scope
   |          ^ not found in this scope
 ```
 
-Rust prevents compilation because otherwise, `x` would be used **before** it’s defined — which is undefined behavior.
+Rust prevents compilation because otherwise, `x` would be used **before** it’s defined - which is undefined behavior.
 
 In languages like Python or JavaScript, this would raise a runtime exception (`NameError`, `ReferenceError`).
 But Rust checks this *at compile time* instead, removing the cost of runtime checks.
@@ -94,7 +94,7 @@ main:
     mov     edi, 1  ; this happens too late!
 ```
 
-Here, `read` expects the argument to be in `edi`, but it’s not set yet — it could contain any garbage value.
+Here, `read` expects the argument to be in `edi`, but it’s not set yet - it could contain any garbage value.
 That’s **undefined behavior**: the CPU might crash, overwrite memory, or worse.
 
 ---
@@ -125,7 +125,7 @@ It can be thought of as two regions:
 
 ---
 
-### Example — Stack Memory
+### Example - Stack Memory
 
 ```rust
 fn main() {
@@ -145,7 +145,7 @@ Stack data is small and cheap to copy.
 
 ---
 
-### Example — Heap Memory with `Box`
+### Example - Heap Memory with `Box`
 
 Now let’s see what happens when we store a **large array**.
 
@@ -156,7 +156,7 @@ fn main() {
 }
 ```
 
-This **copies** one million elements — 2 million total!
+This **copies** one million elements - 2 million total!
 That’s wasteful.
 
 To avoid copying large data, Rust uses **pointers** via heap allocations.
@@ -172,7 +172,7 @@ Now:
 
 * The array lives once, in the **heap**.
 * Both `a` and `b` just hold a **pointer**.
-* But — ownership moves from `a` to `b`.
+* But - ownership moves from `a` to `b`.
   `a` can no longer be used.
 
 ---
@@ -180,7 +180,7 @@ Now:
 ## 3. **Rust Does Not Permit Manual Memory Management**
 
 In C or C++, you call `malloc()` and `free()`.
-In Rust, you don’t manually free memory — it’s handled automatically when ownership ends.
+In Rust, you don’t manually free memory - it’s handled automatically when ownership ends.
 
 Imagine Rust let you do this:
 
@@ -194,7 +194,7 @@ fn main() {
 }
 ```
 
-This is *undefined behavior* — you’re accessing freed memory.
+This is *undefined behavior* - you’re accessing freed memory.
 Rust prevents this at compile time.
 
 So, **Rust never lets you call `free()` yourself.**
@@ -237,7 +237,7 @@ let a = Box::new([0; 1_000_000]);
 let b = a;
 ```
 
-If both `a` and `b` owned the same memory, Rust would free it twice — undefined behavior.
+If both `a` and `b` owned the same memory, Rust would free it twice - undefined behavior.
 
 So Rust’s *correct* rule is:
 
@@ -249,7 +249,7 @@ That’s **ownership**.
 
 ## 5. **Collections and Ownership**
 
-Types like `Vec`, `String`, and `HashMap` internally use heap memory — but with ownership.
+Types like `Vec`, `String`, and `HashMap` internally use heap memory - but with ownership.
 
 Example:
 
@@ -297,7 +297,7 @@ Explanation:
 
 * `first` was *moved* into `add_suffix`
 * `String` does not implement `Copy`
-* Using it again is invalid — it no longer owns the data
+* Using it again is invalid - it no longer owns the data
 
 ---
 
@@ -349,7 +349,7 @@ By enforcing these at compile time, Rust ensures **no undefined behavior** due t
 
 ## **Why References Exist**
 
-We already know ownership and move semantics keep memory safe — but they can make programs *annoyingly restrictive*.
+We already know ownership and move semantics keep memory safe - but they can make programs *annoyingly restrictive*.
 
 For example:
 
@@ -367,7 +367,7 @@ fn greet(g1: String, g2: String) {
 ```
 
 Here, ownership of `m1` and `m2` *moves* into `greet`.
-After that, `main` can’t use them — they’ve been dropped at the end of `greet`.
+After that, `main` can’t use them - they’ve been dropped at the end of `greet`.
 
 Rust will reject this because you’d be trying to use freed memory.
 
@@ -389,7 +389,7 @@ fn greet(g1: String, g2: String) -> (String, String) {
 }
 ```
 
-This returns the ownership back — but it’s **ugly and verbose**.
+This returns the ownership back - but it’s **ugly and verbose**.
 That’s where **references** come in.
 
 ---
@@ -413,7 +413,7 @@ fn greet(g1: &String, g2: &String) {
 
 * `&m1` creates a **reference** (borrow).
 * The parameter type `&String` means *“a reference to a String”*, not the String itself.
-* `g1` doesn’t own the data — it just *borrows* it.
+* `g1` doesn’t own the data - it just *borrows* it.
 * So when `greet` ends, `m1` and `m2` are still valid in `main`.
 
 This is *the foundation of Rust memory safety*.
@@ -424,16 +424,16 @@ This is *the foundation of Rust memory safety*.
 
 * **`m1` owns** the heap data `"Hello"`.
 * **`g1` only points** to it temporarily.
-* When `greet` finishes, **nothing gets freed** — because `g1` doesn’t own it.
+* When `greet` finishes, **nothing gets freed** - because `g1` doesn’t own it.
 
 That’s why references are called **non-owning pointers**.
 
 ---
 
-## **Dereferencing — Accessing Data Behind Pointers**
+## **Dereferencing - Accessing Data Behind Pointers**
 
 You’ve seen `&` to *borrow*.
-The opposite is `*` to *dereference* — to actually *use* the value behind a pointer.
+The opposite is `*` to *dereference* - to actually *use* the value behind a pointer.
 
 Example:
 
@@ -477,7 +477,7 @@ let s_len2 = s.len();
 assert_eq!(s_len1, s_len2);
 ```
 
-Rust’s **dot syntax (`.`)** automatically dereferences as needed — so method calls feel natural.
+Rust’s **dot syntax (`.`)** automatically dereferences as needed - so method calls feel natural.
 
 ---
 
@@ -589,7 +589,7 @@ fn main() {
 ## **Mutable References**
 
 So far, we had shared (`&T`) references.
-Now comes unique (`&mut T`) references — they allow mutation, but no aliasing.
+Now comes unique (`&mut T`) references - they allow mutation, but no aliasing.
 
 Example:
 
@@ -605,8 +605,8 @@ fn main() {
 
 Key observations:
 
-1. When `num` exists, `v` loses all permissions — can’t be used or read.
-2. `*num` gets `R` + `W` — it can read and modify `v[2]`.
+1. When `num` exists, `v` loses all permissions - can’t be used or read.
+2. `*num` gets `R` + `W` - it can read and modify `v[2]`.
 3. After `num` dies (last use), `v` regains permissions.
 
 That’s how Rust guarantees safety:
@@ -628,7 +628,7 @@ fn main() {
 ```
 
 The borrow `&*num` removes write permission from `*num`, but keeps read.
-So both can safely read at the same time — no mutation while aliasing.
+So both can safely read at the same time - no mutation while aliasing.
 
 ---
 
@@ -705,7 +705,7 @@ fn first(strings: &Vec<String>) -> &String {
 }
 ```
 
-Perfectly fine — the reference returned (`s_ref`) points to data inside the input `strings`, which outlives it.
+Perfectly fine - the reference returned (`s_ref`) points to data inside the input `strings`, which outlives it.
 
 ---
 
@@ -762,7 +762,7 @@ fn return_a_string() -> &String {
 }
 ```
 
-This is unsafe because `s` is dropped at the end of the function — so the returned reference would point to freed memory. Rust correctly refuses to compile it.
+This is unsafe because `s` is dropped at the end of the function - so the returned reference would point to freed memory. Rust correctly refuses to compile it.
 
 ---
 
@@ -777,6 +777,6 @@ This is unsafe because `s` is dropped at the end of the function — so the retu
   * Permissions (R/W/O) are tracked and restored after use.
   * Data always outlives its references.
 
-Rust’s reference system looks restrictive, but it’s what allows **C-level performance with absolute safety** — no garbage collector, no memory leaks, no data races.
+Rust’s reference system looks restrictive, but it’s what allows **C-level performance with absolute safety** - no garbage collector, no memory leaks, no data races.
 
 You have come very far, now in the next part, we will cover some other important aspects of ownership.
