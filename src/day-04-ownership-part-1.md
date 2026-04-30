@@ -1,4 +1,5 @@
-# Day 4 - Chapter 4: Ownership and References
+# **Chapter 4 (Part 1)**
+# **Understanding Ownership**
 
 We are going to cover: 
 
@@ -15,7 +16,7 @@ To master ownership, you must understand:
 
 ---
 
-## 1. Safety is the Absence of Undefined Behavior
+## 1. **Safety is the Absence of Undefined Behavior**
 
 Rust defines *safety* as:
 
@@ -110,7 +111,7 @@ By enforcing these **ownership rules at compile time**.
 
 ---
 
-## 2. Ownership as a Discipline for Memory Safety
+## 2. **Ownership as a Discipline for Memory Safety**
 
 Ownership prevents **unsafe operations on memory**.
 
@@ -176,7 +177,7 @@ Now:
 
 ---
 
-## 3. Rust Does Not Permit Manual Memory Management
+## 3. **Rust Does Not Permit Manual Memory Management**
 
 In C or C++, you call `malloc()` and `free()`.
 In Rust, you don’t manually free memory - it’s handled automatically when ownership ends.
@@ -201,7 +202,7 @@ It frees memory automatically when a variable’s owner goes out of scope.
 
 ---
 
-## 4. A Box’s Owner Manages Deallocation
+## 4. **A Box’s Owner Manages Deallocation**
 
 Rust’s (almost correct) deallocation rule:
 
@@ -246,7 +247,7 @@ That’s **ownership**.
 
 ---
 
-## 5. Collections and Ownership
+## 5. **Collections and Ownership**
 
 Types like `Vec`, `String`, and `HashMap` internally use heap memory - but with ownership.
 
@@ -300,7 +301,7 @@ Explanation:
 
 ---
 
-## 6. Cloning Avoids Moves
+## 6. **Cloning Avoids Moves**
 
 If you need to *reuse* a variable after moving, use `.clone()`.
 
@@ -327,7 +328,7 @@ Here:
 
 ---
 
-## 7. Summary: Ownership in Rust
+## 7. **Summary: Ownership in Rust**
 
 Ownership is Rust’s secret weapon for memory safety.
 
@@ -342,11 +343,11 @@ By enforcing these at compile time, Rust ensures **no undefined behavior** due t
 
 ---
 
-## References and Borrowing
+# **References and Borrowing**
 
 ---
 
-### Why References Exist
+## **Why References Exist**
 
 We already know ownership and move semantics keep memory safe - but they can make programs *annoyingly restrictive*.
 
@@ -393,7 +394,7 @@ That’s where **references** come in.
 
 ---
 
-### References: Non-Owning Pointers
+## **References: Non-Owning Pointers**
 
 We can rewrite the program beautifully:
 
@@ -419,7 +420,7 @@ This is *the foundation of Rust memory safety*.
 
 ---
 
-#### Key Idea
+### **Key Idea**
 
 * **`m1` owns** the heap data `"Hello"`.
 * **`g1` only points** to it temporarily.
@@ -429,7 +430,7 @@ That’s why references are called **non-owning pointers**.
 
 ---
 
-### Dereferencing — Accessing Data Behind Pointers
+## **Dereferencing - Accessing Data Behind Pointers**
 
 You’ve seen `&` to *borrow*.
 The opposite is `*` to *dereference* - to actually *use* the value behind a pointer.
@@ -480,7 +481,7 @@ Rust’s **dot syntax (`.`)** automatically dereferences as needed - so method c
 
 ---
 
-### Rust’s Core Safety Rule
+## **Rust’s Core Safety Rule**
 
 > **Pointer Safety Principle:**
 > Data should never be **aliased** and **mutated** at the same time.
@@ -519,7 +520,7 @@ That’s the borrow checker saving you.
 
 ---
 
-### Permissions Model (Borrow Checker Logic)
+## **Permissions Model (Borrow Checker Logic)**
 
 Rust internally tracks **permissions** for every variable:
 
@@ -556,7 +557,7 @@ fn main() {
 
 ---
 
-#### Places vs Variables
+### **Places vs Variables**
 
 Permissions apply to *places*, not just variables.
 
@@ -585,7 +586,7 @@ fn main() {
 
 ---
 
-### Mutable References
+## **Mutable References**
 
 So far, we had shared (`&T`) references.
 Now comes unique (`&mut T`) references - they allow mutation, but no aliasing.
@@ -613,7 +614,7 @@ That’s how Rust guarantees safety:
 
 ---
 
-#### Downgrading a Mutable Reference
+### **Downgrading a Mutable Reference**
 
 You can create a shared (`&T`) reference *from* a mutable (`&mut T`) one:
 
@@ -631,7 +632,7 @@ So both can safely read at the same time - no mutation while aliasing.
 
 ---
 
-### Reference Lifetimes
+## **Reference Lifetimes**
 
 A reference’s **lifetime** = from where it’s created to its last use.
 
@@ -671,7 +672,7 @@ Rust tracks this automatically.
 
 ---
 
-### Data Must Outlive References
+## **Data Must Outlive References**
 
 Rust enforces that **referenced data must live longer** than the reference itself.
 
@@ -691,7 +692,7 @@ fn main() {
 
 ---
 
-#### Function-Level References (Flow Permission F)
+### **Function-Level References (Flow Permission F)**
 
 Inside functions, Rust must ensure *input/output references* are also safe.
 
@@ -751,7 +752,7 @@ We’ll fully cover this in **Chapter 10: Lifetimes**.
 
 ---
 
-#### Another Example: Returning a Reference to Local Data
+### **Another Example: Returning a Reference to Local Data**
 
 ```rust
 fn return_a_string() -> &String {
@@ -765,7 +766,7 @@ This is unsafe because `s` is dropped at the end of the function - so the return
 
 ---
 
-### Summary
+## **Summary**
 
 * References let you access data *without taking ownership*.
 * Created with `&` or `&mut`.

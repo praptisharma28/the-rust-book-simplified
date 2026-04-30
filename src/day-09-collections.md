@@ -1,4 +1,4 @@
-# Day 9 - Chapter 8: Common Collections
+## Chapter 8 – Common Collections
 
 In this chapter, we will cover:
 
@@ -15,11 +15,11 @@ These are the *core* collections you’ll use in almost every Rust program.
 
 ---
 
-## 8.1. Storing Lists of Values with Vectors
+### 8.1. Storing Lists of Values with Vectors
 
 A **vector** (`Vec<T>`) is a growable array type - all elements must be of the same type, and it stores them next to each other in memory.
 
-### Creating a Vector
+#### Creating a Vector
 
 ```rust
 let v: Vec<i32> = Vec::new();
@@ -38,7 +38,7 @@ let v = vec![1, 2, 3];
 
 ---
 
-### Updating a Vector
+#### Updating a Vector
 
 ```rust
 let mut v = Vec::new();
@@ -52,7 +52,7 @@ v.push(7);
 
 ---
 
-### Dropping a Vector
+#### Dropping a Vector
 
 When a vector goes out of scope, all its elements are also **dropped** automatically.
 
@@ -66,7 +66,7 @@ Rust ensures memory safety - no use-after-free or leaks occur.
 
 ---
 
-## 8.2. Reading Elements of Vectors
+### 8.2. Reading Elements of Vectors
 
 You can access elements in two ways:
 
@@ -89,7 +89,7 @@ If you try `v[100]`, it panics at runtime. But `v.get(100)` gives `None`.
 
 ---
 
-### Borrowing Rules with Vectors
+#### Borrowing Rules with Vectors
 
 ```rust
 let mut v = vec![1, 2, 3, 4, 5];
@@ -108,7 +108,7 @@ Rust’s **borrow checker** prevents this to ensure safety.
 
 ---
 
-## 8.3. Iterating over a Vector
+### 8.3. Iterating over a Vector
 
 Iterating by reference:
 
@@ -130,7 +130,7 @@ for i in &mut v {
 
 ---
 
-## 8.4. Storing Multiple Types in a Vector
+### 8.4. Storing Multiple Types in a Vector
 
 Vectors store elements of one type. But using **enums**, we can store different variants:
 

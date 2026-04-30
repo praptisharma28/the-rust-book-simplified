@@ -1,4 +1,4 @@
-# Day 11 - Chapter 10: Generics, Traits, and Lifetimes
+# Chapter 10
 
 We will cover:
 
@@ -381,9 +381,9 @@ fn main() {
 }
 ```
 
-## Part 2: Lifetimes in Rust
+## **Part 2: Lifetimes in Rust**
 
-### 1. Understanding Lifetimes
+### **1. Understanding Lifetimes**
 
 Lifetimes are a form of **generic parameter** in Rust that describe **how long a reference is valid**.
 While type generics (like `<T>`) describe *what kind* of data a function can handle, **lifetime generics** describe *how long* references to that data remain valid.
@@ -395,7 +395,7 @@ In most cases, lifetimes are **inferred automatically** by the compiler, but som
 
 ---
 
-### 2. Preventing Dangling References with Lifetimes
+### **2. Preventing Dangling References with Lifetimes**
 
 The **main goal** of lifetimes is to prevent **dangling references** - situations where a reference points to memory that no longer exists.
 
@@ -426,7 +426,7 @@ error[E0597]: `x` does not live long enough
 
 ---
 
-### 3. The Borrow Checker
+### **3. The Borrow Checker**
 
 The **borrow checker** analyzes lifetimes of all references to ensure:
 
@@ -450,7 +450,7 @@ Rust compares these and rejects the code because `r` refers to data that does no
 
 ---
 
-### 4. Fixing Dangling References
+### **4. Fixing Dangling References**
 
 The correct version ensures that the **data (`x`) outlives the reference (`r`)**:
 
@@ -466,7 +466,7 @@ Now, both the data and reference exist in the same scope - safe and valid.
 
 ---
 
-### 5. Generic Lifetimes in Functions
+### **5. Generic Lifetimes in Functions**
 
 Consider a function to find the longer of two string slices:
 
@@ -501,7 +501,7 @@ Since each reference could have a different lifetime, Rust requires you to **exp
 
 ---
 
-### 6. Lifetime Annotation Syntax
+### **6. Lifetime Annotation Syntax**
 
 Syntax examples:
 
@@ -516,7 +516,7 @@ They only **describe** how multiple references relate in terms of validity.
 
 ---
 
-### 7. Lifetime Annotations in Function Signatures
+### **7. Lifetime Annotations in Function Signatures**
 
 We use **angle brackets** to declare lifetimes, just like type parameters.
 
@@ -539,7 +539,7 @@ Now, Rust can verify this and the function compiles safely.
 
 ---
 
-### 8. How Lifetimes Relate During Function Calls
+### **8. How Lifetimes Relate During Function Calls**
 
 Example where both inputs live long enough:
 
@@ -576,7 +576,7 @@ Rust enforces this strictly, even if we *know* it would refer to `string1` in th
 
 ---
 
-### 9. Thinking in Terms of Lifetimes
+### **9. Thinking in Terms of Lifetimes**
 
 If a function only depends on one reference’s lifetime, you can limit annotations accordingly:
 
@@ -590,7 +590,7 @@ Here, `'a` applies only to `x` and the return value. `y` is independent.
 
 ---
 
-### 10. Returning References to Local Data (Dangling References)
+### **10. Returning References to Local Data (Dangling References)**
 
 Invalid example:
 
@@ -612,7 +612,7 @@ fn longest(x: &str, y: &str) -> String {
 
 ---
 
-### 11. Lifetimes in Struct Definitions
+### **11. Lifetimes in Struct Definitions**
 
 When a struct holds **references**, each reference needs a lifetime annotation:
 
@@ -638,7 +638,7 @@ This ensures that `ImportantExcerpt` cannot outlive the `String` it borrows from
 
 ---
 
-### 12. Lifetime Elision (Automatic Inference Rules)
+### **12. Lifetime Elision (Automatic Inference Rules)**
 
 Rust has **lifetime elision rules** that allow omitting explicit lifetimes in common cases.
 These are *compiler heuristics* based on frequent patterns.
@@ -688,7 +688,7 @@ No explicit annotation is needed because it fits Rust’s rules.
 
 ---
 
-### 13. Lifetime Annotations in Method Definitions
+### **13. Lifetime Annotations in Method Definitions**
 
 If a struct has lifetimes, you must declare them after `impl`:
 
@@ -721,7 +721,7 @@ Explanation:
 
 ---
 
-### 14. The `'static` Lifetime
+### **14. The `'static` Lifetime**
 
 The `'static` lifetime indicates that a reference **lives for the entire duration** of the program.
 
@@ -737,7 +737,7 @@ However, you should not use `'static` to “force” a reference to compile unle
 
 ---
 
-### Final Summary
+### **Final Summary**
 
 * Every reference has a **lifetime** (its valid scope).
 * Rust’s **borrow checker** ensures no reference outlives its data.

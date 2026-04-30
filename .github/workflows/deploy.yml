@@ -1,0 +1,67 @@
+name: Book (build & deploy)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Serialize Pages deploys per-ref; cancel superseded PR builds but never
+# cancel a deploy mid-flight (avoid torn Pages state).
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Version pins live here so updates are a one-line diff.
+env:
+  MDBOOK_VERSION: "0.4.51"
+  MDBOOK_ADMONISH_VERSION: "1.20.0"
+
+jobs:
+  build:
+    name: Build book
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install mdBook toolchain
+        uses: taiki-e/install-action@v2
+        with:
+          tool: mdbook@${{ env.MDBOOK_VERSION }},mdbook-admonish@${{ env.MDBOOK_ADMONISH_VERSION }}
+
+      - name: Build book
+        run: mdbook build
+
+      # Only main pushes and manual dispatches actually ship to Pages.
+      - name: Package for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./book
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+
+    # Repo setting required: Settings -> Pages -> Source = GitHub Actions.
+    environment:
+      name: ${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main' && 'github-pages-manual' || 'github-pages' }}
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    permissions:
+      pages: write      # publish to Pages
+      id-token: write   # OIDC for actions/deploy-pages
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v5

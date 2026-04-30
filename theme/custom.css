@@ -1,0 +1,238 @@
+/* ==========================================================================
+   The Rust Book - Simplified :: landing-page styles only.
+   Everything outside of the landing (sidebar, typography, code blocks,
+   tables, links) is intentionally left to mdBook defaults for a uniform,
+   familiar reading experience.
+   ========================================================================== */
+
+:root {
+    --rs-radius: 10px;
+    --rs-radius-sm: 6px;
+    --rs-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* --- Reading progress bar (added by theme/site.js) ----------------------- */
+#rs-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--sidebar-active);
+    z-index: 1000;
+    transition: width 80ms linear;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+/* --- Landing: hero ------------------------------------------------------- */
+.rs-hero {
+    margin: 0.5rem 0 2rem;
+    padding: 1.8rem 0 1.4rem;
+    border-bottom: 1px solid var(--table-border-color);
+}
+.rs-hero__eyebrow {
+    display: inline-block;
+    font-size: 0.82em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--sidebar-active);
+    margin-bottom: 0.6rem;
+}
+.rs-hero h1 {
+    margin: 0 0 0.6rem;
+}
+.rs-hero__accent {
+    color: var(--sidebar-active);
+    font-style: italic;
+}
+.rs-hero p {
+    margin: 0 0 1rem;
+    max-width: 62ch;
+}
+.rs-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 0.8rem;
+}
+.rs-theme-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+}
+.rs-theme-switcher__label,
+.rs-theme-switcher__hint {
+    font-size: 0.92em;
+    color: color-mix(in srgb, var(--fg) 78%, transparent);
+}
+.rs-theme-btn {
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--table-border-color);
+    background: transparent;
+    color: var(--fg);
+    font: inherit;
+    cursor: pointer;
+    transition: background 120ms var(--rs-ease), border-color 120ms var(--rs-ease), color 120ms var(--rs-ease);
+}
+.rs-theme-btn[aria-pressed="true"] {
+    border-color: var(--sidebar-active);
+    background: color-mix(in srgb, var(--sidebar-active) 12%, transparent);
+}
+.rs-theme-btn:focus-visible {
+    outline: 2px solid var(--sidebar-active);
+    outline-offset: 2px;
+}
+.rs-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--table-border-color);
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: background 120ms var(--rs-ease), color 120ms var(--rs-ease);
+}
+.rs-btn--primary {
+    background: var(--sidebar-active);
+    color: #fff !important;
+    border-color: var(--sidebar-active);
+}
+.rs-btn--primary:hover {
+    filter: brightness(1.08);
+}
+.rs-btn--ghost {
+    color: var(--fg) !important;
+    background: transparent;
+}
+.rs-btn--ghost:hover {
+    background: color-mix(in srgb, var(--fg) 6%, transparent);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .rs-theme-btn:hover {
+        border-color: var(--sidebar-active);
+        background: color-mix(in srgb, var(--sidebar-active) 6%, transparent);
+    }
+}
+
+/* --- Landing: progress bar ---------------------------------------------- */
+.rs-progress {
+    margin: 1rem 0 1.6rem;
+    padding: 10px 14px;
+    border: 1px solid var(--table-border-color);
+    border-radius: var(--rs-radius-sm);
+}
+.rs-progress__label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+.rs-progress__bar {
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--fg) 10%, transparent);
+    overflow: hidden;
+}
+.rs-progress__fill {
+    display: block;
+    height: 100%;
+    background: var(--sidebar-active);
+    border-radius: 999px;
+    width: 84.6%; /* 11 of 13 */
+}
+
+/* --- Landing: feature strip --------------------------------------------- */
+.rs-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 1rem 0 1.6rem;
+}
+.rs-feature {
+    padding: 12px 14px;
+    border: 1px solid var(--table-border-color);
+    border-radius: var(--rs-radius-sm);
+}
+.rs-feature__icon {
+    display: block;
+    margin-bottom: 4px;
+}
+.rs-feature__title {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.rs-feature__desc {
+    font-size: 0.92em;
+    color: color-mix(in srgb, var(--fg) 75%, transparent);
+    margin: 0;
+}
+
+/* --- Landing: chapter card grid ----------------------------------------- */
+.rs-section-title {
+    margin: 2rem 0 0.8rem;
+}
+.rs-chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 0 0 1.6rem;
+}
+.rs-chapter-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    border: 1px solid var(--table-border-color);
+    border-radius: var(--rs-radius-sm);
+    color: var(--fg) !important;
+    text-decoration: none !important;
+    transition: border-color 120ms var(--rs-ease), background 120ms var(--rs-ease);
+}
+.rs-chapter-card:hover {
+    border-color: var(--sidebar-active);
+    background: color-mix(in srgb, var(--sidebar-active) 5%, transparent);
+}
+.rs-chapter-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78em;
+    color: color-mix(in srgb, var(--fg) 65%, transparent);
+}
+.rs-chapter-card__day {
+    font-weight: 600;
+    color: var(--sidebar-active);
+}
+.rs-chapter-card__title {
+    font-weight: 600;
+    margin: 0;
+}
+.rs-chapter-card__desc {
+    font-size: 0.92em;
+    color: color-mix(in srgb, var(--fg) 75%, transparent);
+    margin: 0;
+}
+.rs-chapter-card--soon {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+    border-style: dashed;
+}
+
+/* --- Responsive --------------------------------------------------------- */
+@media (max-width: 720px) {
+    .rs-chapter-grid { grid-template-columns: 1fr; }
+    .rs-theme-switcher { align-items: flex-start; }
+}
+
+/* --- Reduced motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0ms !important;
+    }
+}
