@@ -1,4 +1,4 @@
-## Day 10: Chapter 9 - Error Handling
+# Day 10 - Chapter 9: Error Handling
 
 Errors are inevitable in software, and Rust ensures you handle them *before* your program compiles. This makes your code more robust and less prone to runtime crashes. We will cover:
 
@@ -16,7 +16,7 @@ Unlike languages with *exceptions*, Rust uses:
 
 ---
 
-### Unrecoverable Errors with `panic!`
+## Unrecoverable Errors with `panic!`
 
 When something goes fundamentally wrong, `panic!` stops program execution and prints an error message.
 
@@ -61,7 +61,7 @@ Rust prevents you from accessing invalid memory, unlike C, where this would be u
 
 ---
 
-### Recoverable Errors with `Result<T, E>`
+## Recoverable Errors with `Result<T, E>`
 
 When something might fail (like opening a file), use `Result`.
 
@@ -101,7 +101,7 @@ If the file doesn’t exist, this will panic.
 
 ---
 
-### Handling Different Kinds of Errors
+## Handling Different Kinds of Errors
 
 Sometimes you want to handle errors differently:
 
@@ -122,7 +122,7 @@ fn main() {
 
 ---
 
-### Simplifying with Closures
+## Simplifying with Closures
 
 Instead of multiple `match` expressions:
 
@@ -147,7 +147,7 @@ Cleaner and easier to read.
 
 ---
 
-### Shortcuts for Panic on Error: `unwrap` and `expect`
+## Shortcuts for Panic on Error: `unwrap` and `expect`
 
 Both are shortcuts for `match`:
 
@@ -174,7 +174,7 @@ fn main() {
 
 ---
 
-### Propagating Errors
+## Propagating Errors
 
 Instead of handling errors immediately, you can pass them up the call stack.
 
@@ -201,7 +201,7 @@ This allows the calling code to decide how to handle the error.
 
 ---
 
-### The `?` Operator
+## The `?` Operator
 
 A cleaner, shorter way to propagate errors.
 
@@ -240,7 +240,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 ---
 
-### Key Takeaways:
+## Key Takeaways
 
 * Use `panic!` for unrecoverable errors.
 * Use `Result<T, E>` for recoverable errors.

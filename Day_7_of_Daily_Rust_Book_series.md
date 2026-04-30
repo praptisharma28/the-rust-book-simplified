@@ -1,4 +1,4 @@
-# Day 7 - Enums and Pattern Matching
+# Day 7 - Chapter 6: Enums and Pattern Matching
 
 ## 1. Introduction
 

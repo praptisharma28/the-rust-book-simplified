@@ -1,4 +1,4 @@
-# Understanding Ownership(Part 2)
+# Day 5 - Chapter 4 (Part 2): Ownership, References, and Slices
 
 Today, we will complete:
 

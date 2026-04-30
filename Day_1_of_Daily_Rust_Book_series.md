@@ -1,4 +1,4 @@
-# **The Rust Programming Language**
+# Day 1 - The Rust Programming Language
 
 * Authors: Steve Klabnik, Carol Nichols, Chris Krycho, and with help from the Rust community.
 
@@ -6,7 +6,7 @@
 
 <img width="242" height="208" alt="Screenshot 2025-10-14 at 4 16 33 PM" src="https://github.com/user-attachments/assets/7cb39aee-a7b1-4db8-b00d-116e073e0845" />
 
-### About This Edition
+## About This Edition
 
 * The book assumes, one is using **Rust 1.85.0 or later**, using the **2024 edition**.
 * You set this in your `Cargo.toml` as:
@@ -17,7 +17,7 @@
 
 ---
 
-# **Foreword**
+## Foreword
 
 Rust is about **empowerment** - helping any programmer write reliable and efficient code confidently.
 
@@ -58,7 +58,7 @@ Rust is not just a programming language; it is a tool that helps you become a mo
 
 ---
 
-# **Introduction**
+## Introduction
 
 This is the same text as *The Rust Programming Language* published by No Starch Press. Rust is designed to help you write **fast** and **reliable** software. It combines:
 
@@ -108,13 +108,13 @@ You can have both.
 
 ---
 
-# **1. Getting Started**
+## 1. Getting Started
 
 ---
 
-## **1.1 Installation**
+### 1.1 Installation
 
-### The Recommended Way - `rustup`
+#### The Recommended Way — `rustup`
 
 Rust’s official installer and version manager is called **rustup**. It is used to:
 
@@ -134,7 +134,7 @@ Follow the on-screen instructions. It installs:
 * **rustup** – toolchain manager
 * **cargo** – package manager and build system
 
-### Verifying Installation
+#### Verifying Installation
 
 Restart your terminal and check:
 
@@ -150,13 +150,13 @@ rustc 1.85.0 (or newer)
 
 Your installation is complete.
 
-### Windows Users
+#### Windows Users
 
 Rust works on Linux, macOS, and Windows.
 On Windows, install [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
 If prompted during installation, choose **“Yes”** to install them.
 
-### Keeping Rust Updated
+#### Keeping Rust Updated
 
 Rust releases updates every 6 weeks.
 To update:
@@ -165,7 +165,7 @@ To update:
 rustup update
 ```
 
-### Uninstalling Rust
+#### Uninstalling Rust
 
 If you ever need to remove it:
 
@@ -175,7 +175,7 @@ rustup self uninstall
 
 ---
 
-### Local Documentation
+#### Local Documentation
 
 The installation of Rust also includes a local copy of the documentation so that you can read it offline.
 Run:
@@ -190,12 +190,12 @@ Whenever you’re unsure about a type or function from the standard library, con
 
 ---
 
-### Text Editors and Integrated Development Environments (IDEs)
+#### Text Editors and Integrated Development Environments (IDEs)
 
 Rust does not assume any particular text editor.
 You can use any editor, but modern IDEs provide powerful support.
 
-#### Recommended Editors and IDEs
+##### Recommended Editors and IDEs
 
 * Visual Studio Code (with `rust-analyzer`)
 * IntelliJ IDEA (Rust plugin)
@@ -205,7 +205,7 @@ You can use any editor, but modern IDEs provide powerful support.
 
 Rust maintains a current list on its [tools page](https://www.rust-lang.org/tools).
 
-#### What `rust-analyzer` Provides
+##### What `rust-analyzer` Provides
 
 * Auto-completion (suggests code automatically)
 * Inline error checking (shows errors as you type)
@@ -215,7 +215,7 @@ Rust maintains a current list on its [tools page](https://www.rust-lang.org/tool
 
 ---
 
-### Working Offline with This Book
+#### Working Offline with This Book
 
 Many examples in this book use crates beyond the standard library. (A **crate** is a package of Rust code, like a library in Python or Node.js.)
 To work through them offline, download dependencies ahead of time.
@@ -250,7 +250,7 @@ cargo build --offline
 
 This instructs Cargo to use cached crates only.
 
-#### Summary Table
+##### Summary Table
 
 | Task                 | Command                           | Description                              |
 | -------------------- | --------------------------------- | ---------------------------------------- |
@@ -261,11 +261,11 @@ This instructs Cargo to use cached crates only.
 
 ---
 
-## **1.2 Hello, World!**
+### 1.2 Hello, World!
 
 Now that Rust is installed, you can write your first Rust program.
 
-### Step 1: Create a File
+#### Step 1: Create a File
 
 ```bash
 mkdir hello_world
@@ -273,7 +273,7 @@ cd hello_world
 touch main.rs
 ```
 
-### Step 2: Write the Code
+#### Step 2: Write the Code
 
 In `main.rs`:
 
@@ -283,7 +283,7 @@ fn main() {
 }
 ```
 
-### Step 3: Run It
+#### Step 3: Run It
 
 Compile and execute:
 
@@ -299,7 +299,7 @@ Output:
 Hello, world!
 ```
 
-### Explanation
+#### Explanation
 
 ```rust
 fn main() {
@@ -324,11 +324,11 @@ Rust compiles directly to machine code - no interpreter involved.
 
 ---
 
-## **1.3 Hello, Cargo!**
+### 1.3 Hello, Cargo!
 
 Instead of using `rustc` manually, Rust provides **Cargo**, a powerful build system and package manager.
 
-### What is Cargo?
+#### What is Cargo?
 
 Cargo is Rust’s:
 
@@ -338,7 +338,7 @@ Cargo is Rust’s:
 
 It handles dependencies, compilation, documentation, and testing.
 
-### Creating a Project with Cargo
+#### Creating a Project with Cargo
 
 Run:
 
@@ -356,7 +356,7 @@ hello_cargo/
     └── main.rs
 ```
 
-### Cargo.toml
+#### Cargo.toml
 
 Configuration file written in **TOML (Tom’s Obvious, Minimal Language, similar to INI files)**.
 
@@ -376,7 +376,7 @@ Defines:
 * Edition
 * Dependencies (external libraries)
 
-### src/main.rs
+#### src/main.rs
 
 Automatically created with:
 
@@ -386,7 +386,7 @@ fn main() {
 }
 ```
 
-### Building and Running with Cargo
+#### Building and Running with Cargo
 
 Build:
 
@@ -410,7 +410,7 @@ All builds are stored in the `target/` directory.
 
 ---
 
-### Building for Release
+#### Building for Release
 
 For optimized builds (faster, smaller binary):
 
@@ -428,7 +428,7 @@ The release build runs faster but takes longer to compile.
 
 ---
 
-### Summary of Commands
+#### Summary of Commands
 
 | Task           | Command                  | Description                        |
 | -------------- | ------------------------ | ---------------------------------- |

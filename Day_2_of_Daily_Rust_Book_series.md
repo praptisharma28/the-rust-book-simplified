@@ -1,8 +1,6 @@
-#### The part that will be covered here on day 2 from the official rust book is:
+# Day 2 - Chapter 2: Programming a Guessing Game
 
 <img width="249" height="35" alt="Screenshot 2025-10-15 at 6 38 25 PM" src="https://github.com/user-attachments/assets/5a8a226c-6434-4f3a-84d8-c1b441e0d895" />
-
-# Programming a Guessing Game
 
 This is Rust’s *first real project*.
 By the end of this chapter, you’ll build a simple command-line **Guessing Game** that:

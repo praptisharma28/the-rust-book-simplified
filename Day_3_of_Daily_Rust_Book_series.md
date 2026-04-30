@@ -1,4 +1,4 @@
-# Chapter 3 - Common Programming Concepts (Functions and Control Flow)
+# Day 3 - Chapter 3: Common Programming Concepts
 
 This chapter introduces **core concepts** that are present in nearly every programming language, explained through **Rust’s syntax and semantics**.
 Even though these concepts aren’t unique to Rust, understanding how Rust implements them helps you write **safe, efficient, and reliable code**. We will cover:
@@ -7,7 +7,7 @@ Even though these concepts aren’t unique to Rust, understanding how Rust imple
 
 ---
 
-### Keywords
+## Keywords
 
 Rust has a set of **reserved keywords** - special words that the compiler uses for specific tasks.
 You **cannot** use them as variable names or function identifiers.

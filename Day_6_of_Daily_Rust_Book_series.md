@@ -1,4 +1,4 @@
-## Day 6 - Chapter 5: Structs
+# Day 6 - Chapter 5: Structs
 
 This chapter introduces **structs**, one of Rust’s most important features for defining custom data types. Structs let you group related data together, providing a foundation for organized, idiomatic Rust code.
 From the book, we will cover:
@@ -444,7 +444,7 @@ struct Rectangle {
 
 ---
 
-# Method Syntax in Rust
+## Method Syntax in Rust
 
 ---
 
@@ -460,7 +460,7 @@ This `self` lets methods operate on data *inside* the struct - similar to how me
 
 ---
 
-## Defining Methods on Structs
+### Defining Methods on Structs
 
 Let’s take a simple struct:
 
@@ -507,7 +507,7 @@ The area of the rectangle is 1500 square pixels.
 
 ---
 
-### How This Works
+#### How This Works
 
 * `impl Rectangle { ... }` begins an *implementation block*.
 * Inside it, `fn area(&self) -> u32` defines a *method*.
@@ -531,7 +531,7 @@ That’s why you don’t need to manually pass `rect1` - Rust does it.
 
 ---
 
-## Why &self, not self or &mut self?
+### Why &self, not self or &mut self?
 
 Rust allows three main forms for the first parameter of methods:
 
@@ -551,7 +551,7 @@ Taking ownership (`self`) is rare, used mainly when a method *returns a complete
 
 ---
 
-## Why Use Methods?
+### Why Use Methods?
 
 Using methods instead of plain functions:
 
@@ -562,7 +562,7 @@ Using methods instead of plain functions:
 
 ---
 
-## Methods and Fields with the Same Name
+### Methods and Fields with the Same Name
 
 You can define a method with the same name as a field.
 Example:
@@ -595,7 +595,7 @@ You’ll learn more about making fields private and exposing public getters in C
 
 ---
 
-## Methods with More Parameters
+### Methods with More Parameters
 
 Let’s add another method - one that takes another `Rectangle` as an argument and checks if `self` can contain it.
 
@@ -631,7 +631,7 @@ Here, we pass `&rect2` and `&rect3` - immutable borrows, since we only read thei
 
 ---
 
-## Associated Functions
+### Associated Functions
 
 Not all functions in an `impl` block need to be methods.
 If a function doesn’t take `self` as its first parameter, it’s called an **associated function**.
@@ -663,7 +663,7 @@ Here:
 
 ---
 
-## Multiple impl Blocks
+### Multiple impl Blocks
 
 A struct can have multiple `impl` blocks.
 
@@ -687,7 +687,7 @@ You may not need to split them, but it’s valid - and sometimes useful when com
 
 ---
 
-## Method Calls Are Syntactic Sugar
+### Method Calls Are Syntactic Sugar
 
 Rust translates method calls into plain function calls.
 
@@ -728,7 +728,7 @@ It dereferences automatically when calling with `.`.
 
 ---
 
-## Deeper Dereferencing
+### Deeper Dereferencing
 
 Rust even adds as many references/dereferences as needed to match the `self` type.
 
@@ -750,11 +750,11 @@ but it never upgrades `&` to `&mut`.
 
 ---
 
-## Methods and Ownership
+### Methods and Ownership
 
 Let’s see how ownership and borrowing rules apply to methods.
 
-### Example: Three Kinds of Methods
+#### Example: Three Kinds of Methods
 
 ```rust
 impl Rectangle {    
@@ -775,7 +775,7 @@ impl Rectangle {
 }
 ```
 
-### Calling These Methods
+#### Calling These Methods
 
 ```rust
 let rect = Rectangle { width: 0, height: 0 };
@@ -792,7 +792,7 @@ This is valid - because:
 
 ---
 
-### Mutability with &mut self
+#### Mutability with &mut self
 
 If you try to modify something through an immutable variable:
 
@@ -827,7 +827,7 @@ You can’t call a `&mut self` method through a shared reference.
 
 ---
 
-## Moves with `self`
+### Moves with `self`
 
 When a method takes `self`, it **moves** the instance.
 
@@ -848,7 +848,7 @@ That’s because `max` takes ownership of `rect`, so `rect` can’t be used agai
 
 ---
 
-## Calling `self` Methods on References
+### Calling `self` Methods on References
 
 Sometimes, you might want to call a `self`-taking method (`fn consumes(self)`) on a reference -
 for example, inside another method that takes `&mut self`:
@@ -864,7 +864,7 @@ but `*self` is borrowed - Rust prevents that move to avoid double-free errors.
 
 ---
 
-## Why Rust Prevents Moves from &mut self
+### Why Rust Prevents Moves from &mut self
 
 Rust disallows moving fields out of borrowed data unless the type implements `Copy`.
 Here’s why:
@@ -921,7 +921,7 @@ So Rust forbids this move entirely.
 
 ---
 
-## Summary
+### Summary
 
 * **Structs** let you create custom types grouping related data.
 * **Methods** define behavior tied to those structs.
