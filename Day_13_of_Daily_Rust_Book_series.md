@@ -6,17 +6,19 @@ You've learnt a lot about Rust so far, enough in fact that we can start building
 
 ### What, Why, How?
 
-What: We’ll build a CLI tool that replicates the behaviour of a classic Unix utility called `grep` which is said to stand for ***g**lobally search a **re**gular expression and **p**rint*. It's core functionality is to search for a pattern in a file. It takes 2 arguments, first a file path and second a query string to search for. The query string can be any regular expression, they're beyond the scope of this book but you can learn more about them [here]().
+What: We’ll build a CLI tool that replicates the behaviour of a classic Unix utility called `grep` which is said to stand for ***g**lobally search a **re**gular expression and **p**rint*. Its core functionality is to search for a pattern in a file. It takes 2 arguments, first a file path and second a query string to search for. The query string can be any regular expression, they're beyond the scope of this book but you can learn more about them [here](https://en.wikipedia.org/wiki/Regular_expression).
 
-Why: Rust is **the** language of command line tools, this is primarily thanks to it's cross-platform support,  single binary output and a brilliant suite of libraries. Even though a fully featured version of `grep` called `ripgrep` has been created by a fellow rustacean, our goal here is to learn which is why we won't be using any external libraries like `clap` which greatly simplifies the process of accepting command line input.
+Why: Rust is **the** language of command line tools, this is primarily thanks to its cross-platform support, single binary output and a brilliant suite of libraries. Even though a fully featured version of `grep` called `ripgrep` has been created by a fellow rustacean, our goal here is to learn which is why we won't be using any external libraries like `clap` which greatly simplifies the process of accepting command line input.
 
-How: We'll be following a pattern you will utilize throughout your programming career. We will write bad code that doesn't compile (pseudo code), then bad code that does compile but doesn't work, then bad code that compiles and works then finally optimize it to be good code that works. Then you rinse and repeat, you don't go from nothing to fully working idiomatic code, the middle is where the magic happens and these layers will reduce as you gain more experience. For your first project, we will go through it together.
+How: We'll follow an iterative pattern. Start with code that doesn't compile, get it compiling, get it working, then refactor it into clean idiomatic Rust. You don't go from nothing to perfect code in one pass, and these intermediate steps will get shorter as you gain experience.
 
-You will utilize a lot of concepts we've covered so far about organizing code, handling errors, writing tests and more. We will also use some concepts like iterators and traits that haven't been covered yet, this is also something you will commonly experience as a programmer.
+> You can find the final project code on [GitHub](https://github.com/Nitish-bot/tgrep). Clone it, run it, and compare it against your own implementation as you go.
+
+We'll use concepts we've covered so far (organizing code, handling errors, writing tests) and introduce a few new ones like iterators and traits. Encountering unfamiliar concepts mid-project is something you'll experience regularly as a programmer.
 
 ### Taking Input
 
-We will start by creating a new project using `cargo new <project-name>` as always. We'll call our project `tgrep` (tutorial grep) keeping in line with ambiguous acronyms unix loves and to distinguish it from `grep` that you might have on your machine.
+We will start by creating a new project using `cargo new <project-name>` as always. We'll call our project `tgrep` (tutorial grep) keeping in line with ambiguous acronyms Unix loves and to distinguish it from `grep` that you might have on your machine.
 
 ```
 cargo new tgrep
@@ -24,17 +26,17 @@ cargo new tgrep
 cd tgrep
 ```
 
-In this section we will focus on making `tgrep` accept and print it's two arguments. The two arguments being the file path and the string to search for.
+Let's start by making `tgrep` accept and print its two arguments: the file path and the string to search for.
 
 We will use the `std::env::args` function from the Rust standard library to read the arguments passed to our program. This function returns an iterator over all the arguments provided. We'll learn more about iterators in a following chapter, but for now keep in mind that iterators produce a series of values and there is a method on them called `collect` that can be used to turn the iterator into a collection of all the values the iterator produces.
 
-First, we have to bring the `std::env::args` function into scope, we will instead import the `std::env` module and use the function like so `env::args`. We do this so we can easily utilize other exports from `env`. This also reduces ambiguity since `args` can be mistaken for a function defined in the current module.
+First, we need to bring the `std::env::args` function into scope. Rather than importing the function directly, we'll import the `std::env` module and use the function as `env::args`. This lets us easily use other exports from `env` and reduces ambiguity since `args` could be mistaken for a function defined in the current module.
 
-NOTE: The `std::env::args` function will panic if any argument contains invalid unicode. If you don't know what that is, no need to worry about it for now.
+> **Note:** The `std::env::args` function will `panic!` if any argument contains invalid Unicode. If you don't know what that means, no need to worry about it for now.
 
-We will call the `collect`  method on the iterator returned by `args` to get a vector of the passed arguments. `collect` is one of the few functions that frequently needs annotated types because it cannot infer the kind of collection you.
+We will call the `collect` method on the iterator returned by `args` to get a vector of the passed arguments. `collect` is one of the few functions that frequently needs annotated types because it cannot infer the kind of collection you want.
 
-Finally, we print the vector using the `dbg` macro which stands for debug. When we put all of this together, we get:
+Finally, we print the vector using the `dbg!` macro. Unlike `println!`, `dbg!` prints the file name, line number, and the variable name alongside its value, making it perfect for quick debugging. It also returns the value it prints, so you can use it inline without changing program behavior. When we put all of this together, we get:
 
 src/main.rs
 ```rust
@@ -46,11 +48,11 @@ fn main() {
 }
 ```
 
-Now, let's try to run it with no arguments first.
+Now, try running it with no arguments first.
 
 ```
 cargo run
-   Compiling tgrep v0.1.0 (/home/nitishc/progmag/the-rust-book-simplified/tgrep)
+   Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.21s
      Running `target/debug/tgrep`
 [src/main.rs:5:5] args = [
@@ -58,9 +60,9 @@ cargo run
 ]
 ```
 
-Notice how even with no arguments supplied, the vector still has a single element. This is the path of the executable which was invoked, it matches the behavior of arguments list in C allowing convenient access to the program name.
+Notice how even with no arguments supplied, the vector still has a single element. This is the path of the executable that was invoked. It matches the behavior of argument lists in C, allowing convenient access to the program name.
 
-Now let's run it with 2 arguments as intended, it is possible to just run `cargo run needle haystack` and that would work but it's good practice to separate arguments for our program by two hyphens so people don't get confused. Let's see what that gives us:
+Now try it with 2 arguments as intended. It is possible to just run `cargo run needle haystack` and that would work, but `cargo run` itself accepts flags like `--release`. The `--` tells Cargo "everything after this is for your program, not for Cargo." Let's see what that gives us:
 
 ```
 cargo run -- needle haystack
@@ -73,9 +75,9 @@ cargo run -- needle haystack
 ]
 ```
 
-Perfect! That's what we wanted to see, now let's save those argument values in variables so we can use them throughout the rest of the program.
+That's exactly what we wanted. Now we'll save those argument values in variables so we can use them throughout the rest of the program.
 
-As we just saw, the first argument is always the path to the executable so we ignore `args[0]` and starting at index 1. The first argument is the query to search for and the second is the file path so we name the variable accordingly and pretty print them.
+As we just saw, the first argument is always the path to the executable, so we ignore `args[0]` and start at index 1. The first real argument is the query to search for, and the second is the file path. We name the variables accordingly and print them.
 
 src/main.rs
 ```rust
@@ -92,37 +94,43 @@ fn main() {
 }
 ```
 
-Let's run this program again and see if everything is working as intended.
+Run this program again to confirm everything works:
 
 ```
 cargo run -- needle haystack.txt
-   Compiling tgrep v0.1.0 (/home/nitishc/progmag/the-rust-book-simplified/tgrep)
+   Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.20s
      Running `target/debug/tgrep needle haystack.txt`
 Searching for needle
 In file haystack.txt
 ```
 
-Great! The program works exactly as we expect it to. It is very flaky in it's current state as it would panic if less than 2 arguments are supplied but we can ignore that for now, we'll add error handling in a later section. In the section we will working on adding the capability to read a file.
+The program works exactly as we expect. It is very flaky in its current state. It would `panic!` if fewer than 2 arguments are supplied, but we can ignore that for now and add error handling later. Next, we'll add file reading.
 
 ### Reading a File
 
-Now let's read the file specified in the `file_path` argument and print it's contents. First, we need a sample file to test with. We'll use a file with a small amount of text over multiple lines with some repeated words. Let's create a file called `poem.txt` at the root level of your project with this Emily Dickinson poem:
+Now we'll read the file specified in the `file_path` argument and print its contents. First, we need a sample file to test with. We'll use a file with a small amount of text over multiple lines with some repeated words. Create a file called `quote.txt` at the root level of your project with this Martha Graham quote:
 
-poem.txt
+quote.txt
 ```text
-I'm nobody! Who are you?
-Are you nobody, too?
-Then there's a pair of us - don't tell!
-They'd banish us, you know.
+There is a vitality, a life force, an energy,
+a quickening that is translated through you into action,
+and because there is only one of you in all of time,
+this expression is unique.
 
-How dreary to be somebody!
-How public, like a frog
-To tell your name the livelong day
-To an admiring bog!
+And if you block it, it will never exist through any other medium and it will be lost.
+The world will not have it.
+It is not your business to determine how good it is
+nor how valuable nor how it compares with other expressions.
+It is your business to keep it yours clearly and directly,
+to keep the channel open.
+
+You do not even have to believe in yourself or your work.
+You have to keep yourself open and aware to the urges that motivate you.
+Keep the channel open.
 ```
 
-With the text in place, let's edit `src/main.rs` and add code to read the file. We need to bring in `std::fs` which handles files.
+With the text in place, edit `src/main.rs` and add code to read the file. We need to bring in `std::fs` which handles files.
 
 src/main.rs
 ```rust
@@ -145,39 +153,45 @@ fn main() {
 }
 ```
 
-`fs::read_to_string` takes the `file_path`, opens that file, and returns a `Result<String>` that contains the file's contents. For now we're using `expect` which will panic if the file can't be read.
+`fs::read_to_string` takes the `file_path`, opens that file, and returns a `Result<String>` that contains the file's contents. For now we're using `expect` which will `panic!` if the file can't be read.
 
-Let's run this code with any string as the first argument and the `poem.txt` file as the second:
+Let's run this code with any string as the first argument and the `quote.txt` file as the second:
 
 ```
-cargo run -- the poem.txt
+cargo run -- test quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/tgrep the poem.txt`
-Searching for the
-In file poem.txt
+     Running `target/debug/tgrep test quote.txt`
+Searching for test
+In file quote.txt
 With text:
-I'm nobody! Who are you?
-Are you nobody, too?
-Then there's a pair of us - don't tell!
-They'd banish us, you know.
+There is a vitality, a life force, an energy,
+a quickening that is translated through you into action,
+and because there is only one of you in all of time,
+this expression is unique.
 
-How dreary to be somebody!
-How public, like a frog
-To tell your name the livelong day
-To an admiring bog!
+And if you block it, it will never exist through any other medium and it will be lost.
+The world will not have it.
+It is not your business to determine how good it is
+nor how valuable nor how it compares with other expressions.
+It is your business to keep it yours clearly and directly,
+to keep the channel open.
+
+You do not even have to believe in yourself or your work.
+You have to keep yourself open and aware to the urges that motivate you.
+Keep the channel open.
 ```
 
-Great! The code read and printed the contents of the file. But the code has a few problems. At the moment, the `main` function has multiple responsibilities: it's parsing arguments **and** reading files. As the program grows, this will become harder to maintain. We're also using `expect` for errors, which gives unhelpful panic messages to users. It's best to begin refactoring early, so let's do that next.
+The code read and printed the file contents successfully. But it has a few problems. At the moment, the `main` function has multiple responsibilities: it's parsing arguments **and** reading files. As the program grows, this will become harder to maintain. We're also using `expect` for errors, which gives unhelpful panic messages to users. Time to refactor.
 
 ### Refactoring to Improve Modularity and Error Handling
 
 To improve our program, we'll fix four problems with the current structure:
 
-1. **`main` does too much** — it parses arguments and reads files. As the program grows, `main` will become a mess.
-2. **Configuration is scattered** — `query` and `file_path` are related config values but they're just loose variables.
-3. **Bad error messages** — `expect` prints the same generic message regardless of what went wrong (missing file, no permissions, etc.).
-4. **Ugly panics for users** — if someone runs the program without enough arguments, they get a raw "index out of bounds" error instead of a friendly message.
+1. **`main` does too much.** It parses arguments and reads files. As the program grows, `main` will become a mess.
+2. **Configuration is scattered.** `query` and `file_path` are related config values but they're just loose variables.
+3. **Bad error messages.** `expect` prints the same generic message regardless of what went wrong (missing file, no permissions, etc.).
+4. **Ugly panics for users.** If someone runs the program without enough arguments, they get a raw "index out of bounds" error instead of a friendly message.
 
 #### Separating Concerns in Binary Projects
 
@@ -198,7 +212,7 @@ This pattern separates concerns: `main.rs` handles running the program and `lib.
 
 #### Extracting the Argument Parser
 
-Let's extract the argument parsing into a function called `parse_config` that `main` will call:
+Now we'll extract the argument parsing into a function called `parse_config` that `main` will call:
 
 src/main.rs
 ```rust
@@ -269,11 +283,11 @@ Notice we're using `.clone()` to create owned `String` values. The `args` variab
 
 **The Trade-Offs of Using `clone`**
 
-Many Rustaceans avoid `clone` because of its runtime cost. In Chapter 13, you'll learn more efficient methods. But for now, it's okay to copy a few strings — your file path and query string are very small. It's better to have a working program that's a bit inefficient than to hyperoptimize on your first pass.
+Many Rustaceans avoid `clone` because of its runtime cost. In the next chapter on iterators, you'll learn more efficient methods. But for now, it's okay to copy a few strings. Your file path and query string are very small. It's better to have a working program that's a bit inefficient than to hyperoptimize on your first pass.
 
 #### Creating a Constructor for Config
 
-Since `parse_config`'s purpose is to create a `Config` instance, we can change it from a plain function to a `new` function associated with the `Config` struct. This is more idiomatic — just like `String::new`, we can create instances with `Config::new`:
+Since `parse_config`'s purpose is to create a `Config` instance, we can change it from a plain function to a `new` function associated with the `Config` struct. This is more idiomatic, just like how `String::new` works. We can create instances with `Config::new`:
 
 src/main.rs
 ```rust
@@ -310,7 +324,7 @@ We've moved `parse_config` into an `impl` block and renamed it to `new`. Try com
 
 #### Fixing the Error Handling
 
-Now let's fix our error handling. Recall that accessing `args[1]` or `args[2]` will **panic** if the vector has fewer than 3 items. Try running the program without arguments:
+Time to fix the error handling. Recall that accessing `args[1]` or `args[2]` will **`panic!`** if the vector has fewer than 3 items. Try running the program without arguments:
 
 ```
 cargo run
@@ -324,7 +338,7 @@ index out of bounds: the len is 1 but the index is 1
 
 "index out of bounds" is a message for programmers, not end users. Let's fix that.
 
-First, let's add a check in `new` that verifies we have enough arguments before accessing them:
+First, add a check in `new` that verifies we have enough arguments before accessing them:
 
 src/main.rs
 ```rust
@@ -354,7 +368,7 @@ thread 'main' panicked at src/main.rs:26:13:
 not enough arguments
 ```
 
-Better message! But we still get all the extra output about threads and backtraces. As we discussed in Chapter 9, `panic!` is for programming problems, not usage problems. Instead, let's return a `Result` to indicate success or failure.
+The message is clearer, but we still get all the extra output about threads and backtraces. As we discussed in Chapter 9, `panic!` is for programming problems, not usage problems. Instead, we'll return a `Result` to indicate success or failure.
 
 #### Returning a Result Instead of Calling panic!
 
@@ -396,7 +410,7 @@ fn main() {
 
 We've used `unwrap_or_else`, which we haven't covered in detail yet. It's defined on `Result<T, E>` and allows custom, non-panic error handling. If the `Result` is `Ok`, it returns the inner value. If it's `Err`, it calls the closure (the anonymous function between the pipes) with the error value.
 
-We've brought `process` into scope. In the error case, we print the error and call `process::exit(1)`, which stops the program with a nonzero exit code — the convention for signaling errors to the shell.
+We've brought `process` into scope. In the error case, we print the error and call `process::exit(1)`, which stops the program with a nonzero exit code. This is the convention for signaling errors to the shell.
 
 Let's try it:
 
@@ -408,11 +422,11 @@ cargo run
 Problem parsing arguments: not enough arguments
 ```
 
-Much friendlier for our users!
+Much friendlier for users.
 
 #### Extracting Logic from main
 
-Now let's extract all the logic from `main` into a `run` function. When we're done, `main` will be concise and easy to verify, and we'll be able to test all the other logic.
+Now we'll extract all the logic from `main` into a `run` function. When we're done, `main` will be concise and easy to verify, and we'll be able to test all the other logic.
 
 src/main.rs
 ```rust
@@ -437,7 +451,7 @@ The `run` function contains all the remaining logic from `main`, starting from r
 
 #### Returning Errors from run
 
-Let's improve the error handling in `run`, just like we did with `Config::build`. Instead of `expect`, `run` will return a `Result<T, E>` when something goes wrong. This lets us consolidate error handling in `main`:
+We'll improve the error handling in `run`, just like we did with `Config::build`. Instead of `expect`, `run` will return a `Result<T, E>` when something goes wrong. This lets us consolidate error handling in `main`:
 
 src/main.rs
 ```rust
@@ -456,7 +470,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 Three significant changes here:
 
-1. **Return type changed to `Result<(), Box<dyn Error>>`**. The `Ok` case still returns `()`. For the error type, we used `Box<dyn Error>`, which means the function returns a type that implements the `Error` trait, but we don't have to specify which particular type. This gives us flexibility. We'll cover trait objects in Chapter 18.
+1. **Return type changed to `Result<(), Box<dyn Error>>`**. The `Ok` case still returns `()`. For the error type, we used `Box<dyn Error>`, which means the function returns a type that implements the `Error` trait, but we don't have to specify which particular type. This gives us flexibility. We'll cover trait objects in Chapter 18, much later in the book.
 
 2. **Removed `expect` in favor of `?`**. Instead of panicking on an error, `?` returns the error value for the caller to handle.
 
@@ -465,7 +479,7 @@ Three significant changes here:
 When you run this, it will compile but show a warning:
 
 ```
-cargo run -- the poem.txt
+cargo run -- the quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
 warning: unused `Result` that must be used
   --> src/main.rs:19:5
@@ -476,7 +490,7 @@ warning: unused `Result` that must be used
    = note: this `Result` may be an `Err` variant, which should be handled
 ```
 
-Rust is reminding us that we might be ignoring an error! Let's fix that.
+Rust is warning us that we might be ignoring an error. Let's fix that.
 
 #### Handling Errors Returned from run in main
 
@@ -503,7 +517,7 @@ We use `if let` rather than `unwrap_or_else` because `run` returns `()` in the s
 
 Now we'll split `src/main.rs` and put some code into `src/lib.rs`. This lets us test the searching logic and keeps `main.rs` small.
 
-Let's define the search function in `src/lib.rs` with a body that calls the `unimplemented!` macro for now:
+We'll define the search function in `src/lib.rs` with a body that calls the `unimplemented!` macro for now. This macro is a specialized version of `panic!` that we use as a placeholder. It signals "I haven't written this yet" and crashes with a helpful message if reached.
 
 src/lib.rs
 ```rust
@@ -512,7 +526,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 ```
 
-We've used `pub` to make `search` part of our library's public API. Now let's bring this into `main.rs` and use it:
+We've used `pub` to make `search` part of our library's public API. Now we'll bring this into `main.rs` and use it:
 
 src/main.rs
 ```rust
@@ -533,15 +547,15 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 We add `use tgrep::search` to bring the search function from our library into scope. Then in `run`, instead of printing the entire file, we call `search` and print each matching line. This is also a good time to remove the `println!` calls in `main` that displayed the query and file path, so our program only prints search results.
 
-Whew! That was a lot of work, but we've set ourselves up for success. Now it's much easier to handle errors, and we've made the code more modular. Almost all our work from here on out will be in `src/lib.rs`.
+That was a solid round of refactoring. Error handling is now centralized, and the code is properly modular. Almost all our work from here on out will be in `src/lib.rs`.
 
-Let's take advantage of this modularity by doing something that would have been difficult before: we'll write some **tests**!
+Now that things are modular, we can do something that would have been hard before: write some **tests**!
 
 ### Adding Functionality with Test-Driven Development
 
 Now that our search logic is in `src/lib.rs` separate from `main`, it's much easier to write tests for our core functionality. We can call functions directly with various arguments without having to run our binary from the command line.
 
-In this section, we'll add the searching logic using **Test-Driven Development (TDD)** with these steps:
+We'll add the searching logic using **Test-Driven Development (TDD)** with these steps:
 
 1. Write a test that fails and run it to make sure it fails for the reason you expect.
 2. Write or modify just enough code to make the new test pass.
@@ -575,7 +589,7 @@ Pick three.";
 
 This test searches for the string `"duct"`. The text is three lines, but only one contains `"duct"`. The backslash after the opening quote tells Rust not to put a newline at the beginning of the string.
 
-If we run this test now, it will fail because `unimplemented!` panics with "not implemented". In accordance with TDD, let's take a small step and define `search` to always return an empty vector. Then the test should compile and fail because an empty vector doesn't match our expected result:
+If we run this test now, it will fail because `unimplemented!` panics with "not implemented". Following TDD, we'll take a tiny step: define `search` to always return an empty vector. Then the test should compile and fail because an empty vector doesn't match our expected result:
 
 src/lib.rs
 ```rust
@@ -661,7 +675,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 ```
 
-Now let's run the test:
+Run the test:
 
 ```
 cargo test
@@ -675,43 +689,41 @@ test tests::one_result ... ok
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-Our test passed! The code isn't using some useful iterator features yet, but we'll return to that in Chapter 13.
+The test passed. The code isn't using some useful iterator features yet, but we'll return to iterators in the next chapter.
 
-Now the entire program should work. Let's try it with a word from the Emily Dickinson poem:
+Now the entire program should work. Let's try it with a word from the Martha Graham quote:
 
 ```
-cargo run -- frog poem.txt
+cargo run -- vitality quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.38s
-     Running `target/debug/tgrep frog poem.txt`
-How public, like a frog
+     Running `target/debug/tgrep vitality quote.txt`
+There is a vitality, a life force, an energy,
 ```
 
-Let's try a word that matches multiple lines, like `body`:
+Let's try a word that matches multiple lines, like `open`:
 
 ```
-cargo run -- body poem.txt
+cargo run -- open quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/tgrep body poem.txt`
-I'm nobody! Who are you?
-Are you nobody, too?
-How dreary to be somebody!
+     Running `target/debug/tgrep open quote.txt`
+to keep the channel open.
+You have to keep yourself open and aware to the urges that motivate you.
+Keep the channel open.
 ```
 
-And let's make sure we get nothing when searching for a word that isn't in the poem:
+And let's make sure we get nothing when searching for a word that isn't in the quote:
 
 ```
-cargo run -- monomorphization poem.txt
+cargo run -- monomorphization quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/tgrep monomorphization poem.txt`
+     Running `target/debug/tgrep monomorphization quote.txt`
 
 ```
 
-Excellent! We've built our own mini version of a classic tool.
-
-To round out this project, we'll briefly demonstrate how to work with environment variables and how to print to standard error.
+We've built our own mini version of a classic tool. Before wrapping up, let's cover two more things: environment variables and printing to standard error.
 
 ### Working with Environment Variables
 
@@ -756,7 +768,7 @@ Trust me.";
 }
 ```
 
-Notice we added `"Duct tape."` to the old test. This ensures our case-sensitive search doesn't accidentally match uppercase letters — a form of **regression testing** to make sure we don't break existing functionality.
+Notice we added `"Duct tape."` to the old test. This ensures our case-sensitive search doesn't accidentally match uppercase letters. It's a form of **regression testing** to make sure we don't break existing functionality.
 
 The new test uses `"rUsT"` as its query, which should match `"Rust:"` (capital R) and `"Trust me."` (lowercase r). This test will fail to compile because we haven't defined `search_case_insensitive` yet.
 
@@ -802,13 +814,13 @@ test tests::case_sensitive ... ok
 test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-Great! Now let's wire this into our program. We need to:
+Both tests pass. Now we'll wire this into our program. We need to:
 
 1. Add a configuration option to `Config`
 2. Check for the environment variable when building `Config`
 3. Call the appropriate search function based on the config
 
-First, add `ignore_case` to the `Config` struct:
+First, add `ignore_case` to the `Config` struct. We also need to make `Config` and its fields `pub` (public) now that we're splitting code between `main.rs` and `lib.rs`. Items in `lib.rs` can only access what's explicitly marked public:
 
 src/main.rs
 ```rust
@@ -868,38 +880,35 @@ impl Config {
 }
 ```
 
-`env::var("IGNORE_CASE")` returns a `Result`. If the environment variable is set to any value, it returns `Ok`. If it's not set, it returns `Err`. We use `is_ok()` to check whether the variable is set — we don't care about its actual value, just whether it exists.
+`env::var("IGNORE_CASE")` returns a `Result`. If the environment variable is set to any value, it returns `Ok`. If it's not set, it returns `Err`. We use `is_ok()` to check whether the variable is set. We don't care about its actual value, just whether it exists.
 
 Let's try it! First without the environment variable:
 
 ```
-cargo run -- to poem.txt
+cargo run -- keep quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/tgrep to poem.txt`
-Are you nobody, too?
-How dreary to be somebody!
-```
+     Running `target/debug/tgrep keep quote.txt`
+It is your business to keep it yours clearly and directly,
+to keep the channel open.
+You have to keep yourself open and aware to the urges that motivate you.
 
-Now with `IGNORE_CASE` set:
-
-```
-IGNORE_CASE=1 cargo run -- to poem.txt
+IGNORE_CASE=1 cargo run -- keep quote.txt
    Compiling tgrep v0.1.0 (file:///projects/tgrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/tgrep to poem.txt`
-Are you nobody, too?
-How dreary to be somebody!
-To tell your name the livelong day
-To an admiring bog!
+     Running `target/debug/tgrep keep quote.txt`
+It is your business to keep it yours clearly and directly,
+to keep the channel open.
+You have to keep yourself open and aware to the urges that motivate you.
+Keep the channel open.
 ```
 
-Excellent! We now have case-insensitive searching controlled by an environment variable.
+We now have case-insensitive searching controlled by an environment variable.
 
 **Windows Note:** If you're using PowerShell, set the environment variable separately:
 
 ```powershell
-PS> $Env:IGNORE_CASE=1; cargo run -- to poem.txt
+PS> $Env:IGNORE_CASE=1; cargo run -- to quote.txt
 ```
 
 To unset it:
@@ -912,8 +921,8 @@ PS> Remove-Item Env:IGNORE_CASE
 
 At the moment, all our output goes to standard output using `println!`. But terminals actually have two output streams:
 
-- **Standard output (stdout)** — for normal program output
-- **Standard error (stderr)** — for error messages
+- **Standard output (stdout)** for normal program output
+- **Standard error (stderr)** for error messages
 
 This distinction lets users redirect successful output to a file while still seeing errors on the screen. Our program currently misbehaves: error messages go to stdout, so they end up in files when redirected.
 
@@ -923,7 +932,7 @@ Let's demonstrate the problem:
 cargo run > output.txt
 ```
 
-The `>` tells the shell to write stdout to `output.txt`. We didn't pass arguments, so we expect an error. But the error message doesn't appear on screen — it went into the file:
+The `>` tells the shell to write stdout to `output.txt`. We didn't pass arguments, so we expect an error. But the error message doesn't appear on screen. It went into the file:
 
 ```
 cat output.txt
@@ -932,7 +941,7 @@ Problem parsing arguments: not enough arguments
 
 That's not ideal. We want errors on screen and only successful search results in files.
 
-Rust provides the `eprintln!` macro that prints to **standard error** instead of standard output. Let's change the two places in `main` where we print errors:
+Rust provides the `eprintln!` macro that prints to **standard error** instead of standard output. We need to change the two places in `main` where we print errors:
 
 src/main.rs
 ```rust
@@ -951,33 +960,34 @@ fn main() {
 }
 ```
 
-Now let's run it the same way:
+Now run it the same way:
 
 ```
 cargo run > output.txt
 Problem parsing arguments: not enough arguments
 ```
 
-Now we see the error on screen, and `output.txt` is empty — exactly what we want!
+Now we see the error on screen, and `output.txt` is empty. Exactly what we want!
 
 Let's also verify that successful output still goes to the file:
 
 ```
-cargo run -- to poem.txt > output.txt
+cargo run -- open quote.txt > output.txt
 ```
 
 No terminal output, and `output.txt` contains:
 
 ```
-Are you nobody, too?
-How dreary to be somebody!
+to keep the channel open.
+You have to keep yourself open and aware to the urges that motivate you.
+Keep the channel open.
 ```
 
 Now we're using standard output for successful output and standard error for errors, which is the proper convention for command line programs.
 
 ### Summary
 
-This chapter recapped many concepts you've learned so far and covered how to perform common I/O operations in Rust. You learned how to:
+This chapter tied together a lot of what you've learned and showed you how to handle common I/O tasks in Rust. Here's what we covered:
 
 - Accept **command line arguments** using `std::env::args`
 - **Read files** using `std::fs::read_to_string`
@@ -991,4 +1001,4 @@ This chapter recapped many concepts you've learned so far and covered how to per
 
 Combined with concepts from previous chapters, you're now prepared to write real command line applications that are well organized, handle errors gracefully, and are properly tested.
 
-Next, we'll explore some Rust features that were influenced by functional languages: **closures and iterators**.
+In the next chapter, we'll explore closures and iterators, two Rust features inspired by functional languages.

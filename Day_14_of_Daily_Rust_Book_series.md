@@ -314,7 +314,7 @@ The closure captures `shoe_size` from environment.
 
 ---
 
-## 11. Real Project Improvement (`minigrep`)
+## 11. Real Project Improvement (`tgrep`)
 
 Chapter 13 improves Chapter 12 code in two useful places.
 
