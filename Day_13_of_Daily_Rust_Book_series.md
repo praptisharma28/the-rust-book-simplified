@@ -2,7 +2,7 @@
 
 You've learnt a lot about Rust so far, enough in fact that we can start building our very first project. Consider this a recap of what's been covered so far and a peek into what lies ahead in this book. In this chapter, we will cover:
 
-<img width="338" height="266" alt="Screenshot" src="https://github.com/user-attachments/assets/b086cdf8-30cf-46e9-98d0-6d6ca8fc095f" />
+<img width="399" height="440" alt="image" src="https://github.com/user-attachments/assets/bbe07f95-0a97-4e43-8b50-957231edc086" />
 
 ### What, Why, How?
 
